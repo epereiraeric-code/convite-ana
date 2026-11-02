@@ -1,0 +1,366 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ana · 12 de dezembro</title>
+<meta name="description" content="Convite da Ana — sábado, 12 de dezembro, das 19:30 às 02:00.">
+<meta property="og:title" content="Você está convidado(a) — Ana">
+<meta property="og:description" content="Sábado, 12/12 · 19:30 às 02:00">
+<meta name="theme-color" content="#F7DDE2">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,500;6..96,700&family=Cormorant+Garamond:wght@500;600;700&family=Pinyon+Script&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blush: #F7DDE2;
+    --petal: #FFF4F6;
+    --rose: #E9798F;
+    --rose-deep: #B9475F;
+    --gold: #C49A1C;
+    --leaf: #8DA587;
+    --ink: #7A2E40;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--blush);
+    color: var(--ink);
+    font: 600 1.15rem/1.6 "Cormorant Garamond", Georgia, serif;
+    -webkit-tap-highlight-color: transparent;
+  }
+  body.locked { overflow: hidden; }
+  a { color: inherit; }
+  :focus-visible { outline: 3px solid var(--rose-deep); outline-offset: 4px; border-radius: 8px; }
+
+  /* ---------- Capa (portas que abrem) ---------- */
+  .cover {
+    position: fixed; inset: 0; z-index: 10;
+    display: grid; place-items: center;
+    perspective: 1600px;
+    transition: visibility 0s 1.3s;
+  }
+  .door {
+    position: absolute; top: 0; bottom: 0; width: 50%;
+    background: var(--blush);
+    overflow: hidden;
+    transition: transform 1.2s cubic-bezier(.6,.05,.3,1);
+  }
+  .door.left  { left: 0;  transform-origin: left center;  box-shadow: inset -18px 0 30px -18px rgba(122,46,64,.35); }
+  .door.right { right: 0; transform-origin: right center; box-shadow: inset 18px 0 30px -18px rgba(122,46,64,.25); }
+  .door svg { position: absolute; width: 100%; height: 100%; }
+  .seal {
+    position: relative; z-index: 2;
+    width: min(62vw, 260px); aspect-ratio: 1;
+    padding: 0; border: 0; background: none; cursor: pointer;
+    transition: transform .5s ease, opacity .5s ease;
+    animation: breathe 2.8s ease-in-out infinite;
+  }
+  .seal svg { width: 100%; height: 100%; overflow: visible; }
+  @keyframes breathe { 50% { transform: scale(1.04); } }
+  .cover.open { visibility: hidden; }
+  .cover.open .door.left  { transform: rotateY(-105deg); }
+  .cover.open .door.right { transform: rotateY(105deg); }
+  .cover.open .seal { opacity: 0; transform: scale(.6); animation: none; }
+
+  /* ---------- Conteúdo ---------- */
+  main { max-width: 34rem; margin: 0 auto; text-align: center; overflow: hidden; }
+  section { position: relative; padding: 0 1.25rem; }
+  .hero { min-height: 100svh; display: flex; flex-direction: column; justify-content: center; padding-top: 7rem; padding-bottom: 3rem; }
+  .hero .bloom { position: absolute; top: -2.5rem; left: 50%; width: 120%; transform: translateX(-50%); pointer-events: none; }
+  .name {
+    position: relative;
+    margin: 0;
+    font: 700 clamp(5.5rem, 31vw, 9.5rem)/.9 "Bodoni Moda", serif;
+    letter-spacing: .02em;
+    color: var(--rose);
+  }
+  .name::after { content: ""; display: block; width: 62%; height: 2px; margin: .9rem auto 0; background: var(--rose); }
+  .day { margin: 1.4rem 0 0; font: 400 clamp(3.4rem, 17vw, 4.6rem)/1 "Pinyon Script", cursive; color: var(--rose); }
+  .date { margin: .2rem 0 0; font: 500 clamp(3.4rem, 18vw, 5rem)/1 "Bodoni Moda", serif; color: var(--rose); font-style: italic; }
+  .time { margin: .6rem 0 0; font: 700 1.9rem/1 "Bodoni Moda", serif; color: var(--rose); letter-spacing: .02em; }
+  .time span { font-weight: 500; font-size: 1.3rem; padding: 0 .3rem; }
+
+  .actions { display: grid; grid-template-columns: repeat(3, 1fr); gap: .5rem; margin: 2.6rem 0 0; padding: 0; list-style: none; }
+  .actions a {
+    display: flex; flex-direction: column; align-items: center; gap: .6rem;
+    min-height: 44px; padding: .5rem .25rem; text-decoration: none;
+    font: 700 1.05rem/1.15 "Cormorant Garamond", serif; color: var(--rose-deep);
+  }
+  .actions .icon {
+    display: grid; place-items: center;
+    width: 4.6rem; height: 4.6rem; border-radius: 50%;
+    background: var(--rose); color: var(--petal);
+    box-shadow: 0 0 0 4px var(--blush), 0 0 0 5.5px var(--rose);
+    transition: transform .2s ease;
+  }
+  .actions a:active .icon { transform: scale(.92); }
+  .actions svg { width: 2.2rem; height: 2.2rem; }
+  .address { margin: 1.4rem auto 0; max-width: 22rem; font-size: 1.05rem; color: var(--ink); }
+  .address a { font-weight: 700; color: var(--rose-deep); }
+  .note { min-height: 1.6em; margin: .6rem 0 0; font-size: 1rem; color: var(--rose-deep); }
+
+  /* Dress code é uma tela própria: só aparece quando o endereço termina em #dress-code */
+  .dress { display: none; }
+  .dress:target {
+    display: flex; flex-direction: column; justify-content: center;
+    position: fixed; inset: 0; z-index: 5; overflow-y: auto;
+    padding: 4rem 1.25rem 3rem; background: var(--blush);
+    animation: slideIn .35s ease-out;
+  }
+  @keyframes slideIn { from { opacity: 0; transform: translateX(12%); } }
+  .dress .frame { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+  .dress h2 { position: relative; margin: 0 0 1.2rem; font: 700 clamp(2.8rem, 13vw, 3.6rem)/1 "Bodoni Moda", serif; color: var(--rose); }
+  .dress p { position: relative; max-width: 18rem; margin: 0 auto 1rem; font-size: 1.3rem; line-height: 1.45; }
+  .dress strong { color: var(--rose-deep); }
+  .avoid { display: flex; justify-content: center; gap: 1rem; margin: 1.6rem 0 0; position: relative; }
+  .avoid li { list-style: none; display: flex; flex-direction: column; align-items: center; gap: .3rem; font-size: 1rem; }
+  .swatch { position: relative; width: 2.6rem; height: 2.6rem; border-radius: 50%; border: 2px solid var(--petal); }
+  .swatch::after { content: ""; position: absolute; left: 50%; top: -4px; bottom: -4px; width: 2px; background: var(--rose-deep); transform: rotate(45deg); }
+  .back { display: inline-block; margin-top: 2.2rem; padding: .7rem 1.4rem; border: 1.5px solid var(--rose); border-radius: 999px; text-decoration: none; color: var(--rose-deep); position: relative; }
+  footer { padding: 2rem 1rem 3rem; font: 400 2.2rem/1 "Pinyon Script", cursive; color: var(--rose); text-align: center; }
+
+  /* ---------- Escolha do app de navegação ---------- */
+  .sheet {
+    width: 100%; max-width: 34rem; margin: auto auto 0; padding: 1.6rem 1.25rem calc(1.2rem + env(safe-area-inset-bottom));
+    border: 0; border-radius: 22px 22px 0 0;
+    background: var(--petal); color: var(--ink); text-align: center;
+    font: inherit;
+  }
+  .sheet::backdrop { background: rgba(122,46,64,.35); }
+  .sheet[open] { animation: rise .25s ease-out; }
+  @keyframes rise { from { transform: translateY(100%); } }
+  .sheet h3 { margin: 0; font: 700 1.9rem/1.1 "Bodoni Moda", serif; color: var(--rose); }
+  .sheet-addr { margin: .6rem auto 1.2rem; max-width: 20rem; font-size: 1.1rem; line-height: 1.4; }
+  .nav-btn {
+    display: block; margin: 0 0 .7rem; padding: .95rem 1rem; border-radius: 14px;
+    background: var(--rose); color: #fff; text-decoration: none; font-weight: 700; font-size: 1.15rem;
+  }
+  .nav-btn + .nav-btn { background: var(--rose-deep); }
+  .sheet-close { margin-top: .2rem; padding: .8rem 1.5rem; border: 0; background: none; font: inherit; color: var(--rose-deep); cursor: pointer; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .sheet[open] { animation: none; }
+    html { scroll-behavior: auto; }
+    .door, .seal, .cover, .dress:target { transition: none !important; animation: none !important; }
+  }
+</style>
+</head>
+<body class="locked">
+
+<!-- Desenhos reutilizados (flores e folhas em aquarela) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <filter id="wc" x="-20%" y="-20%" width="140%" height="140%">
+      <feTurbulence type="fractalNoise" baseFrequency=".035" numOctaves="2" seed="4"/>
+      <feDisplacementMap in="SourceGraphic" scale="7"/>
+    </filter>
+    <radialGradient id="pLily" cx="50%" cy="100%" r="100%">
+      <stop offset="0" stop-color="#E25C7C"/><stop offset=".45" stop-color="#F2A3B4"/><stop offset="1" stop-color="#FFF1F3"/>
+    </radialGradient>
+    <radialGradient id="pBlossom" cx="50%" cy="90%" r="90%">
+      <stop offset="0" stop-color="#F08DA3"/><stop offset="1" stop-color="#FDE3E8"/>
+    </radialGradient>
+    <linearGradient id="gLeaf" x1="0" x2="1"><stop offset="0" stop-color="#7E9877"/><stop offset="1" stop-color="#B9CBB0"/></linearGradient>
+    <!-- lírio: 6 pétalas longas -->
+    <g id="lily" filter="url(#wc)">
+      <g fill="url(#pLily)" opacity=".92">
+        <path id="lp" d="M0 0 C-14 -30 -12 -70 0 -100 C12 -70 14 -30 0 0Z"/>
+        <use href="#lp" transform="rotate(60)"/><use href="#lp" transform="rotate(120)"/>
+        <use href="#lp" transform="rotate(180)"/><use href="#lp" transform="rotate(240)"/><use href="#lp" transform="rotate(300)"/>
+      </g>
+      <g stroke="#C04A64" stroke-width="1.6" fill="none" opacity=".55">
+        <path d="M0 -10 L0 -60M8 -8 L40 -40M-8 -8 L-40 -40M8 6 L42 30M-8 6 L-42 30"/>
+      </g>
+      <g fill="#C66A2E"><circle cx="0" cy="-62" r="4"/><circle cx="42" cy="-42" r="4"/><circle cx="-42" cy="-42" r="4"/><circle cx="44" cy="32" r="4"/><circle cx="-44" cy="32" r="4"/></g>
+    </g>
+    <!-- flor pequena: 5 pétalas redondas -->
+    <g id="blossom" filter="url(#wc)">
+      <g fill="url(#pBlossom)" opacity=".9">
+        <ellipse id="bp" cx="0" cy="-24" rx="17" ry="24"/>
+        <use href="#bp" transform="rotate(72)"/><use href="#bp" transform="rotate(144)"/><use href="#bp" transform="rotate(216)"/><use href="#bp" transform="rotate(288)"/>
+      </g>
+      <circle r="7" fill="#E9B44C"/><circle r="3" fill="#B5462C"/>
+    </g>
+    <g id="leaf" filter="url(#wc)"><path d="M0 0 C20 -20 20 -60 0 -90 C-20 -60 -20 -20 0 0Z" fill="url(#gLeaf)" opacity=".85"/></g>
+  </defs>
+</svg>
+
+<div class="cover" id="cover">
+  <div class="door left" aria-hidden="true">
+    <svg viewBox="0 0 200 800" preserveAspectRatio="xMinYMid slice">
+      <use href="#leaf" transform="translate(150 760) rotate(-25) scale(1.1)"/>
+      <use href="#lily" transform="translate(40 90) rotate(15) scale(1)"/>
+      <use href="#blossom" transform="translate(110 210) scale(1.1)"/>
+      <use href="#blossom" transform="translate(20 260) rotate(30) scale(.8)"/>
+      <use href="#lily" transform="translate(30 520) rotate(-20) scale(.95)"/>
+      <use href="#blossom" transform="translate(90 640) rotate(12) scale(1.2)"/>
+      <use href="#leaf" transform="translate(130 720) rotate(20) scale(.9)"/>
+    </svg>
+  </div>
+  <div class="door right" aria-hidden="true">
+    <svg viewBox="0 0 200 800" preserveAspectRatio="xMaxYMid slice">
+      <use href="#lily" transform="translate(160 80) rotate(-10) scale(1.05)"/>
+      <use href="#blossom" transform="translate(190 250) scale(.9)"/>
+      <use href="#lily" transform="translate(170 400) rotate(25) scale(.9)"/>
+      <use href="#leaf" transform="translate(185 610) rotate(-40) scale(1)"/>
+      <use href="#blossom" transform="translate(150 560) rotate(40) scale(1.1)"/>
+      <use href="#lily" transform="translate(180 720) rotate(5) scale(1.1)"/>
+    </svg>
+  </div>
+
+  <!-- Selo + texto curvo formam UM único botão: o toque funciona em qualquer parte -->
+  <button class="seal" id="open" type="button" aria-label="Abrir o convite">
+    <svg viewBox="-130 -130 260 260" aria-hidden="true">
+      <defs>
+        <radialGradient id="wax" cx="40%" cy="35%" r="75%">
+          <stop offset="0" stop-color="#FFC3D1"/><stop offset=".6" stop-color="#F28CA6"/><stop offset="1" stop-color="#D9677F"/>
+        </radialGradient>
+        <path id="arc" d="M -96 40 A 104 104 0 1 1 40 96"/>
+      </defs>
+      <text font-family="Cormorant Garamond, serif" font-weight="700" font-size="27" fill="#C49A1C" letter-spacing="1">
+        <textPath href="#arc" startOffset="2%">Toque para abrir</textPath>
+      </text>
+      <path id="waxEdge" fill="url(#wax)"/>
+      <circle r="52" fill="none" stroke="#FFE1E8" stroke-width="2" opacity=".8"/>
+      <circle r="58" fill="none" stroke="#C85A73" stroke-width="1.2" opacity=".35"/>
+      <g fill="none" stroke="#FFD9E1" stroke-width="1.6" opacity=".9">
+        <path d="M-30 32 C-50 10 -48 -20 -30 -38"/><path d="M30 32 C50 10 48 -20 30 -38"/>
+      </g>
+      <g fill="#FFD9E1" opacity=".9">
+        <ellipse cx="-44" cy="0" rx="3" ry="6" transform="rotate(-20 -44 0)"/><ellipse cx="-40" cy="-20" rx="3" ry="6" transform="rotate(-50 -40 -20)"/><ellipse cx="-42" cy="20" rx="3" ry="6" transform="rotate(20 -42 20)"/>
+        <ellipse cx="44" cy="0" rx="3" ry="6" transform="rotate(20 44 0)"/><ellipse cx="40" cy="-20" rx="3" ry="6" transform="rotate(50 40 -20)"/><ellipse cx="42" cy="20" rx="3" ry="6" transform="rotate(-20 42 20)"/>
+      </g>
+      <text y="22" text-anchor="middle" font-family="Pinyon Script, cursive" font-size="74" fill="#FFF0F3" stroke="#D9677F" stroke-width=".8">A</text>
+    </svg>
+  </button>
+</div>
+
+<main id="convite" tabindex="-1">
+  <section class="hero" aria-labelledby="nome">
+    <svg class="bloom" viewBox="0 0 400 120" aria-hidden="true">
+      <use href="#lily" transform="translate(30 30) rotate(30) scale(.7)"/>
+      <use href="#blossom" transform="translate(110 10) scale(.8)"/>
+      <use href="#lily" transform="translate(370 25) rotate(-20) scale(.75)"/>
+      <use href="#blossom" transform="translate(300 5) rotate(20) scale(.7)"/>
+    </svg>
+    <h1 class="name" id="nome">ANA</h1>
+    <p class="day">Sábado</p>
+    <p class="date"><time datetime="2026-12-12">12/12</time></p>
+    <p class="time"><time datetime="19:30">19:30</time><span>às</span><time datetime="02:00">02:00</time></p>
+
+    <ul class="actions">
+      <li>
+        <a id="lnk-local" href="#como-chegar" aria-haspopup="dialog">
+          <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-6.5-6.2-6.5-11.2a6.5 6.5 0 0 1 13 0C18.5 14.8 12 21 12 21Z"/><circle cx="12" cy="9.8" r="2.4"/></svg></span>
+          Localização
+        </a>
+      </li>
+      <li>
+        <a id="lnk-rsvp" target="_blank" rel="noopener">
+          <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="8" r="3.5"/><path d="M3.5 19.5c.8-3.4 3.4-5.5 6.5-5.5 1.3 0 2.5.3 3.5 1"/><path d="m14.5 18 2.2 2.2 4.3-4.7"/></svg></span>
+          Confirmar presença
+        </a>
+      </li>
+      <li>
+        <a href="#dress-code">
+          <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 4.5 4 7l-1.5 4 3.3 1.2V20h12.4v-7.8L21.5 11 20 7l-4.5-2.5c-.6 1.3-1.9 2.1-3.5 2.1s-2.9-.8-3.5-2.1Z"/></svg></span>
+          Dress code
+        </a>
+      </li>
+    </ul>
+    <p class="note" id="note" role="status"></p>
+    <p class="address" id="address"></p>
+  </section>
+
+  <section class="dress" id="dress-code" aria-labelledby="dc-title">
+    <svg class="frame" viewBox="0 0 400 600" preserveAspectRatio="none" aria-hidden="true">
+      <use href="#lily" transform="translate(0 40) rotate(40) scale(.7)"/>
+      <use href="#blossom" transform="translate(20 300) scale(.8)"/>
+      <use href="#leaf" transform="translate(10 560) rotate(30) scale(.8)"/>
+      <use href="#lily" transform="translate(400 120) rotate(-30) scale(.7)"/>
+      <use href="#blossom" transform="translate(385 420) rotate(25) scale(.85)"/>
+    </svg>
+    <h2 id="dc-title">Dress code</h2>
+    <p>Para esta ocasião especial, o traje solicitado é <strong>Social Fino</strong>.</p>
+    <p>Pedimos gentilmente que evitem peças em qualquer tom de rosa ou prata.</p>
+    <ul class="avoid" aria-label="Cores a evitar">
+      <li><span class="swatch" style="background:#F3A6BA"></span>Rosa</li>
+      <li><span class="swatch" style="background:linear-gradient(135deg,#F2F2F2,#A9A9AE 55%,#E4E4E7)"></span>Prata</li>
+    </ul>
+    <p style="margin-top:1.6rem">Contamos com sua compreensão.</p>
+    <p><a class="back" href="#convite">Voltar</a></p>
+  </section>
+  <footer>Te espero!</footer>
+</main>
+
+<dialog class="sheet" id="como-chegar" aria-labelledby="cc-title">
+  <h3 id="cc-title" tabindex="-1" autofocus style="outline:none">Como chegar</h3>
+  <p class="sheet-addr" id="sheet-addr"></p>
+  <a class="nav-btn" id="nav-maps" target="_blank" rel="noopener">Abrir no Google Maps</a>
+  <a class="nav-btn" id="nav-waze" target="_blank" rel="noopener">Abrir no Waze</a>
+  <button class="sheet-close" type="button" id="sheet-close">Fechar</button>
+</dialog>
+
+<script>
+  // ==== CONFIGURE AQUI ====
+  const CONFIG = {
+    // WhatsApp: 55 + DDD + número, só dígitos (ex.: 5511987654321)
+    whatsapp: "5511971689015",
+    mensagem: "Olá! Confirmo minha presença no aniversário da Ana em 12/12.",
+    endereco: "R. José Angelo Rodrigues, 17 – Embu Mirim, Itapecerica da Serra – SP, 06854-127",
+    // ID do local no Google (mantém o pino exato no Maps)
+    googlePlaceId: "ChIJ3aEFx9msz5QRvFUQXyI5sgU"
+  };
+  // ========================
+
+  // rota a partir de onde o convidado está (sem ponto de partida fixo)
+  const destino = encodeURIComponent(CONFIG.endereco.replace(/–/g, "-"));
+  const MAPS_URL = `https://www.google.com/maps/dir/?api=1&destination=${destino}&destination_place_id=${CONFIG.googlePlaceId}`;
+  const WAZE_URL = `https://waze.com/ul?q=${destino}&navigate=yes`;
+  // contorno ondulado do lacre de cera
+  (() => {
+    const pts = [];
+    for (let i = 0; i <= 360; i += 4) {
+      const a = i * Math.PI / 180, r = 72 + 5 * Math.sin(a * 9) + 2 * Math.sin(a * 23);
+      pts.push(`${(r * Math.cos(a)).toFixed(1)} ${(r * Math.sin(a)).toFixed(1)}`);
+    }
+    document.getElementById("waxEdge").setAttribute("d", "M" + pts.join("L") + "Z");
+  })();
+
+  const cover = document.getElementById("cover");
+  document.getElementById("open").addEventListener("click", () => {
+    cover.classList.add("open");
+    document.body.classList.remove("locked");
+    document.getElementById("convite").focus({ preventScroll: true });
+  });
+
+  const sheet = document.getElementById("como-chegar");
+  document.getElementById("address").textContent = CONFIG.endereco;
+  document.getElementById("sheet-addr").textContent = CONFIG.endereco;
+  document.getElementById("nav-maps").href = MAPS_URL;
+  document.getElementById("nav-waze").href = WAZE_URL;
+  document.getElementById("lnk-local").addEventListener("click", e => {
+    if (typeof sheet.showModal !== "function") return; // navegador antigo: segue a âncora
+    e.preventDefault();
+    sheet.showModal();
+  });
+  document.getElementById("sheet-close").addEventListener("click", () => sheet.close());
+  sheet.addEventListener("click", e => { if (e.target === sheet) sheet.close(); }); // toque fora fecha
+  sheet.querySelectorAll(".nav-btn").forEach(a => a.addEventListener("click", () => setTimeout(() => sheet.close(), 300)));
+
+  const rsvp = document.getElementById("lnk-rsvp");
+  if (/^55\d{10,11}$/.test(CONFIG.whatsapp)) {
+    rsvp.href = `https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(CONFIG.mensagem)}`;
+  } else {
+    rsvp.href = "#";
+    rsvp.removeAttribute("target");
+    rsvp.addEventListener("click", e => {
+      e.preventDefault();
+      document.getElementById("note").textContent = "Confirmação indisponível: número do WhatsApp não configurado.";
+    });
+  }
+</script>
+</body>
+</html>
