@@ -11,7 +11,7 @@
 <meta name="color-scheme" content="light">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,500;0,6..96,700;1,6..96,500&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Pinyon+Script&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,500;0,6..96,700;1,6..96,500&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Montserrat:wght@500;600;700&family=Pinyon+Script&display=swap" rel="stylesheet">
 <style>
   :root {
     --blush: #F7DDE2;
@@ -264,7 +264,7 @@
   .time { margin-top: 1svh; font-size: min(1.9rem, 4.4svh); }
   .time span { font-size: .68em; }
   .countdown { margin: 1.6svh 0 0; font: 600 min(1.12rem, 2.7svh)/1.2 "Cormorant Garamond", serif; letter-spacing: .05em; color: var(--rose-deep); }
-  .countdown b { font: 700 1.08em/1 "Bodoni Moda", serif; font-variant-numeric: lining-nums tabular-nums; }
+  .countdown b { font: 700 1.02em/1 "Montserrat", system-ui, sans-serif; font-variant-numeric: lining-nums tabular-nums; }
   .actions { margin-top: 3svh; }
   .actions a { gap: min(.65rem, 1.2svh); font-size: min(1.05rem, 2.6svh); }
   .actions .icon { width: min(4.6rem, 10.5svh); height: min(4.6rem, 10.5svh); }
@@ -328,6 +328,33 @@
     .reveal { opacity: 1; transform: none; }
     .petals { display: none; }
   }
+</style>
+<style>/* Montserrat no texto de apoio (legibilidade); títulos e caligrafia continuam */
+  body{font:600 1rem/1.55 "Montserrat",system-ui,sans-serif}
+  .hint,.scroll-cue{font:600 .8rem/1 "Montserrat",sans-serif}
+  .countdown{font:600 min(.95rem,2.3svh)/1.2 "Montserrat",sans-serif;letter-spacing:.02em}
+  .time{font:700 min(1.6rem,3.8svh)/1 "Montserrat",sans-serif}
+  .actions a{font:700 min(.88rem,2.2svh)/1.2 "Montserrat",sans-serif}
+  .btn,.back,.next{font:700 .92rem/1 "Montserrat",sans-serif;letter-spacing:.01em}
+  .page .lead{font-size:min(1rem,2.4svh)} .when{font-size:min(.95rem,2.3svh)} .page .small{font-size:min(.88rem,2.2svh)} .page .privacy{font-size:min(.82rem,2.1svh)}
+  input[type=text],input[type=tel]{font:600 1rem/1.2 "Montserrat",sans-serif}
+  .stepper output{font:700 1.05rem/1 "Montserrat",sans-serif}
+  .stepper button{font:600 1.4rem/1 "Montserrat",sans-serif}
+  .back,.next{font-size:.82rem;padding-inline:.95rem}
+  /* música de fundo: player do YouTube invisível + botão de som */
+  .yt { position: fixed; left: 0; bottom: 0; width: 2px; height: 2px; opacity: .01; pointer-events: none; z-index: -1; overflow: hidden; }
+  .music {
+    position: fixed; z-index: 40; top: calc(.75rem + env(safe-area-inset-top, 0px)); right: calc(.75rem + env(safe-area-inset-right, 0px));
+    width: 2.6rem; height: 2.6rem; display: grid; place-items: center; padding: 0; border: 0; border-radius: 50%; cursor: pointer;
+    background: var(--petal); color: var(--rose-deep); box-shadow: 0 0 0 1.5px #D9B65A, 0 4px 14px rgba(185,71,95,.22);
+  }
+  .music svg { width: 1.25rem; height: 1.25rem; }
+  .music .off { display: none; }
+  .music[aria-pressed="false"] .on { display: none; }
+  .music[aria-pressed="false"] .off { display: block; }
+  .music[aria-pressed="true"] .on { animation: pulse 2.4s ease-in-out infinite; }
+  @keyframes pulse { 50% { transform: scale(1.12); } }
+  @media (prefers-reduced-motion: reduce) { .music .on { animation: none !important; } }
 </style>
 </head>
 <body>
@@ -631,6 +658,12 @@
   </nav>
 </section>
 
+<div class="yt" aria-hidden="true"><div id="yt"></div></div>
+<button class="music" id="music" type="button" aria-label="Música de fundo" aria-pressed="false" hidden>
+  <svg class="on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l11-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="17" cy="16" r="3"/></svg>
+  <svg class="off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l11-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="17" cy="16" r="3"/><path d="M3 3l18 18"/></svg>
+</button>
+
 <script>
   // ==== CONFIGURE AQUI ====
   const CONFIG = {
@@ -640,7 +673,9 @@
     endereco: "R. José Angelo Rodrigues, 17 – Embu Mirim, Itapecerica da Serra – SP, 06854-127",
     googlePlaceId: "ChIJ3aEFx9msz5QRvFUQXyI5sgU",
     inicio: "2026-12-12T19:30:00-03:00",
-    fim: "2026-12-13T02:00:00-03:00"
+    fim: "2026-12-13T02:00:00-03:00",
+    // música de fundo (YouTube): trecho em segundos, repetido em loop; video vazio = sem música
+    musica: { video: "BPgro9iPCCo", de: 48, ate: 80 }
   };
   // ========================
 
@@ -698,9 +733,52 @@
     }
   }
 
+
+  // música de fundo: começa no toque do lacre e repete o trecho com fade
+  const music = $("music");
+  let player = null, ytReady = false, querMusica = false, volTimer = null;
+  function setMusicBtn(tocando) { music.setAttribute("aria-pressed", String(tocando)); music.setAttribute("aria-label", tocando ? "Pausar música" : "Tocar música"); }
+  function tocar() {
+    querMusica = true;
+    if (!ytReady) return;
+    player.unMute(); player.setVolume(0); player.playVideo();
+  }
+  function pausar() { querMusica = false; if (ytReady) player.pauseVideo(); setMusicBtn(false); }
+  if (CONFIG.musica?.video) {
+    window.onYouTubeIframeAPIReady = () => {
+      player = new YT.Player("yt", {
+        width: 2, height: 2, videoId: CONFIG.musica.video,
+        playerVars: { start: CONFIG.musica.de, playsinline: 1, controls: 0, disablekb: 1, fs: 0, rel: 0, iv_load_policy: 3, origin: location.origin },
+        events: {
+          onReady: () => { ytReady = true; if (querMusica) tocar(); },
+          onStateChange: e => {
+            if (e.data === YT.PlayerState.PLAYING) {
+              setMusicBtn(true);
+              clearInterval(volTimer);
+              volTimer = setInterval(() => {
+                const t = player.getCurrentTime(), { de, ate } = CONFIG.musica;
+                if (t >= ate || t < de - 1) { player.seekTo(de, true); return; }
+                player.setVolume(Math.round(100 * Math.min(1, (t - de) / 2, (ate - t) / 2)));
+              }, 200);
+            } else if (e.data === YT.PlayerState.ENDED) { player.seekTo(CONFIG.musica.de, true); player.playVideo(); }
+            else if (e.data === YT.PlayerState.PAUSED) { clearInterval(volTimer); setMusicBtn(false); }
+          }
+        }
+      });
+    };
+    const tag = document.createElement("script"); tag.src = "https://www.youtube.com/iframe_api"; document.head.append(tag);
+    music.addEventListener("click", () => music.getAttribute("aria-pressed") === "true" ? pausar() : tocar());
+    // som some quando o convidado sai da aba e volta quando ele retorna
+    document.addEventListener("visibilitychange", () => {
+      if (!ytReady || !querMusica) return;
+      document.hidden ? player.pauseVideo() : player.playVideo();
+    });
+  }
+
   const cover = $("cover");
   $("open").addEventListener("click", () => {
     if (navigator.vibrate) navigator.vibrate(25);
+    if (CONFIG.musica?.video) { music.hidden = false; tocar(); }
     cover.classList.add("open");
     document.body.classList.remove("locked");
     document.body.classList.add("ready");
