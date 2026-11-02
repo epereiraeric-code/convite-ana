@@ -3,282 +3,540 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Ana · 12 de dezembro</title>
-<meta name="description" content="Convite da Ana — sábado, 12 de dezembro, das 19:30 às 02:00.">
-<meta property="og:title" content="Você está convidado(a) — Ana">
+<title>Ana · 15 anos · 12 de dezembro</title>
+<meta name="description" content="Meus 15 anos — sábado, 12 de dezembro de 2026, das 19:30 às 02:00.">
+<meta property="og:title" content="Você está convidado(a) — 15 anos da Ana">
 <meta property="og:description" content="Sábado, 12/12 · 19:30 às 02:00">
 <meta name="theme-color" content="#F7DDE2">
+<meta name="color-scheme" content="light">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,500;6..96,700&family=Cormorant+Garamond:wght@500;600;700&family=Pinyon+Script&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,500;0,6..96,700;1,6..96,500&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Pinyon+Script&display=swap" rel="stylesheet">
 <style>
   :root {
     --blush: #F7DDE2;
+    --blush-2: #F3D0D7;
     --petal: #FFF4F6;
     --rose: #E9798F;
     --rose-deep: #B9475F;
-    --gold: #C49A1C;
-    --leaf: #8DA587;
     --ink: #7A2E40;
+    --gold: #C49A1C;
+    --gold-light: #F3D98A;
+    --foil: linear-gradient(100deg, #A87A12 0%, #E2B94A 20%, #FFF0B8 34%, #CFA233 48%, #93680F 62%, #E6C05A 80%, #A87A12 100%);
   }
   * { box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
+  html { scroll-behavior: smooth; overflow-x: hidden; }
   body {
     margin: 0;
-    background: var(--blush);
+    background:
+      radial-gradient(circle at 50% 0%, #FFF0F3 0%, rgba(255,240,243,0) 55%),
+      var(--blush);
     color: var(--ink);
     font: 600 1.15rem/1.6 "Cormorant Garamond", Georgia, serif;
     -webkit-tap-highlight-color: transparent;
+    overflow-x: hidden;
+    font-variant-numeric: lining-nums;
   }
-  body.locked { overflow: hidden; }
+  body.locked { overflow: hidden; height: 100svh; }
   a { color: inherit; }
   :focus-visible { outline: 3px solid var(--rose-deep); outline-offset: 4px; border-radius: 8px; }
+  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+  /* folha de ouro: texto com brilho que passa */
+  .foil {
+    background: var(--foil); background-size: 220% auto;
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+    animation: shimmer 7s linear infinite;
+  }
+  @keyframes shimmer { to { background-position: -220% center; } }
+
+  /* ---------- pétalas caindo ---------- */
+  .petals { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+  .petal {
+    position: absolute; top: 0; width: var(--s); height: calc(var(--s) * 1.25);
+    background: radial-gradient(ellipse at 30% 30%, #FFE3EA 0%, #F7A6BA 45%, #E8728F 100%);
+    border-radius: 80% 0 80% 0; opacity: .85;
+    animation: fall var(--d) linear var(--delay) infinite;
+    will-change: transform;
+  }
+  @keyframes fall {
+    0%   { transform: translate3d(0, -12vh, 0) rotate(0deg) rotateX(0deg); }
+    25%  { transform: translate3d(calc(var(--dx) * .5), 22vh, 0) rotate(calc(var(--r) * .3)) rotateX(60deg); }
+    50%  { transform: translate3d(calc(var(--dx) * -.2), 50vh, 0) rotate(calc(var(--r) * .55)) rotateX(10deg); }
+    75%  { transform: translate3d(calc(var(--dx) * .7), 80vh, 0) rotate(calc(var(--r) * .8)) rotateX(70deg); }
+    100% { transform: translate3d(var(--dx), 112vh, 0) rotate(var(--r)) rotateX(20deg); }
+  }
 
   /* ---------- Capa (portas que abrem) ---------- */
   .cover {
-    position: fixed; inset: 0; z-index: 10;
+    position: fixed; inset: 0; z-index: 30;
     display: grid; place-items: center;
-    perspective: 1600px;
-    transition: visibility 0s 1.3s;
+    perspective: 1800px;
+    transition: visibility 0s 1.5s;
   }
   .door {
     position: absolute; top: 0; bottom: 0; width: 50%;
-    background: var(--blush);
+    background:
+      linear-gradient(90deg, rgba(255,255,255,.0), rgba(255,255,255,.25) 50%, rgba(255,255,255,0)),
+      var(--blush);
     overflow: hidden;
-    transition: transform 1.2s cubic-bezier(.6,.05,.3,1);
+    transition: transform 1.4s cubic-bezier(.6,.05,.25,1);
   }
-  .door.left  { left: 0;  transform-origin: left center;  box-shadow: inset -18px 0 30px -18px rgba(122,46,64,.35); }
-  .door.right { right: 0; transform-origin: right center; box-shadow: inset 18px 0 30px -18px rgba(122,46,64,.25); }
+  .door.left  { left: 0;  transform-origin: left center;  box-shadow: inset -22px 0 34px -20px rgba(122,46,64,.38); }
+  .door.right { right: 0; transform-origin: right center; box-shadow: inset 22px 0 34px -20px rgba(122,46,64,.28); }
   .door svg { position: absolute; width: 100%; height: 100%; }
+  /* filete dourado na borda interna de cada porta */
+  .door::after { content: ""; position: absolute; top: 0; bottom: 0; width: 2px; background: var(--foil); opacity: .7; }
+  .door.left::after { right: 10px; } .door.right::after { left: 10px; }
   .seal {
     position: relative; z-index: 2;
-    width: min(62vw, 260px); aspect-ratio: 1;
+    width: min(70vw, 300px); aspect-ratio: 1;
     padding: 0; border: 0; background: none; cursor: pointer;
-    transition: transform .5s ease, opacity .5s ease;
-    animation: breathe 2.8s ease-in-out infinite;
+    transition: transform .55s cubic-bezier(.3,1.6,.5,1), opacity .5s ease;
+    animation: breathe 3s ease-in-out infinite;
   }
-  .seal svg { width: 100%; height: 100%; overflow: visible; }
-  @keyframes breathe { 50% { transform: scale(1.04); } }
-  .cover.open { visibility: hidden; }
-  .cover.open .door.left  { transform: rotateY(-105deg); }
-  .cover.open .door.right { transform: rotateY(105deg); }
-  .cover.open .seal { opacity: 0; transform: scale(.6); animation: none; }
+  .seal svg { width: 100%; height: 100%; overflow: visible; filter: drop-shadow(0 10px 14px rgba(122,46,64,.28)); }
+  @keyframes breathe { 50% { transform: scale(1.045); } }
+  .twinkle { animation: twinkle 2.4s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+  @keyframes twinkle { 0%, 100% { opacity: 0; transform: scale(.3); } 50% { opacity: 1; transform: scale(1); } }
+  .hint { display: none; position: absolute; bottom: calc(2.2rem + env(safe-area-inset-bottom)); left: 0; right: 0; z-index: 2; text-align: center; font: 500 1rem/1 "Cormorant Garamond", serif; letter-spacing: .3em; text-transform: uppercase; color: var(--rose-deep); opacity: .75; }
+  .cover.open { visibility: hidden; pointer-events: none; }
+  .cover.open .door.left  { transform: rotateY(-108deg); }
+  .cover.open .door.right { transform: rotateY(108deg); }
+  .cover.open .seal { opacity: 0; transform: scale(1.35); animation: none; }
+  .cover.open .hint { opacity: 0; transition: opacity .3s; }
 
   /* ---------- Conteúdo ---------- */
-  main { max-width: 34rem; margin: 0 auto; text-align: center; overflow: hidden; }
+  main { position: relative; z-index: 1; max-width: 34rem; margin: 0 auto; text-align: center; overflow-x: clip; }
   section { position: relative; padding: 0 1.25rem; }
-  .hero { min-height: 100svh; display: flex; flex-direction: column; justify-content: center; padding-top: 7rem; padding-bottom: 3rem; }
-  .hero .bloom { position: absolute; top: -2.5rem; left: 50%; width: 120%; transform: translateX(-50%); pointer-events: none; }
+
+  .hero { min-height: 100svh; display: flex; flex-direction: column; justify-content: center; padding-top: 7rem; padding-bottom: 2.5rem; }
+  .garland { position: absolute; top: -1rem; left: 50%; width: 128%; max-width: 46rem; transform: translateX(-50%); pointer-events: none; }
+  .kicker { margin: 0; font: 400 clamp(2.3rem, 11vw, 3rem)/1 "Pinyon Script", cursive; position: relative; }
   .name {
-    position: relative;
-    margin: 0;
-    font: 700 clamp(5.5rem, 31vw, 9.5rem)/.9 "Bodoni Moda", serif;
-    letter-spacing: .02em;
-    color: var(--rose);
+    position: relative; margin: .1rem 0 0;
+    font: 700 clamp(5.8rem, 33vw, 10rem)/.9 "Bodoni Moda", serif;
+    letter-spacing: .02em; color: var(--rose);
+    text-shadow: 0 2px 0 #fff4, 0 10px 30px rgba(233,121,143,.25);
   }
-  .name::after { content: ""; display: block; width: 62%; height: 2px; margin: .9rem auto 0; background: var(--rose); }
-  .day { margin: 1.4rem 0 0; font: 400 clamp(3.4rem, 17vw, 4.6rem)/1 "Pinyon Script", cursive; color: var(--rose); }
-  .date { margin: .2rem 0 0; font: 500 clamp(3.4rem, 18vw, 5rem)/1 "Bodoni Moda", serif; color: var(--rose); font-style: italic; }
-  .time { margin: .6rem 0 0; font: 700 1.9rem/1 "Bodoni Moda", serif; color: var(--rose); letter-spacing: .02em; }
+  .name span { display: inline-block; opacity: 0; transform: translateY(.35em) scale(.9); filter: blur(6px); }
+  .ready .name span { animation: letterIn 1s cubic-bezier(.2,.8,.2,1) forwards; }
+  .ready .name span:nth-child(2) { animation-delay: .18s; }
+  .ready .name span:nth-child(3) { animation-delay: .36s; }
+  @keyframes letterIn { to { opacity: 1; transform: none; filter: none; } }
+  .rule { display: block; width: 66%; height: 22px; margin: .6rem auto 0; overflow: visible; }
+  .rule path { stroke-dasharray: 400; stroke-dashoffset: 400; }
+  .ready .rule path { animation: draw 1.6s .6s ease forwards; }
+  @keyframes draw { to { stroke-dashoffset: 0; } }
+  .day { margin: 1.1rem 0 0; font: 400 clamp(3.4rem, 17vw, 4.6rem)/1 "Pinyon Script", cursive; color: var(--rose); }
+  .date { margin: .1rem 0 0; font: 500 clamp(3.6rem, 19vw, 5.2rem)/1 "Bodoni Moda", serif; color: var(--rose); font-style: italic; }
+  .time { margin: .7rem 0 0; font: 700 1.9rem/1 "Bodoni Moda", serif; color: var(--rose); letter-spacing: .02em; }
   .time span { font-weight: 500; font-size: 1.3rem; padding: 0 .3rem; }
 
   .actions { display: grid; grid-template-columns: repeat(3, 1fr); gap: .5rem; margin: 2.6rem 0 0; padding: 0; list-style: none; }
   .actions a {
-    display: flex; flex-direction: column; align-items: center; gap: .6rem;
+    display: flex; flex-direction: column; align-items: center; gap: .65rem;
     min-height: 44px; padding: .5rem .25rem; text-decoration: none;
     font: 700 1.05rem/1.15 "Cormorant Garamond", serif; color: var(--rose-deep);
   }
   .actions .icon {
-    display: grid; place-items: center;
+    position: relative; display: grid; place-items: center;
     width: 4.6rem; height: 4.6rem; border-radius: 50%;
-    background: var(--rose); color: var(--petal);
-    box-shadow: 0 0 0 4px var(--blush), 0 0 0 5.5px var(--rose);
+    background: radial-gradient(circle at 35% 30%, #F6A3B5, var(--rose) 55%, #D9607A);
+    color: var(--petal);
+    box-shadow: 0 0 0 4px var(--blush), 0 0 0 5.5px var(--gold), 0 8px 18px rgba(185,71,95,.28);
     transition: transform .2s ease;
   }
-  .actions a:active .icon { transform: scale(.92); }
-  .actions svg { width: 2.2rem; height: 2.2rem; }
-  .address { margin: 1.4rem auto 0; max-width: 22rem; font-size: 1.05rem; color: var(--ink); }
-  .address a { font-weight: 700; color: var(--rose-deep); }
-  .note { min-height: 1.6em; margin: .6rem 0 0; font-size: 1rem; color: var(--rose-deep); }
-
-  /* Dress code é uma tela própria: só aparece quando o endereço termina em #dress-code */
-  .dress { display: none; }
-  .dress:target {
-    display: flex; flex-direction: column; justify-content: center;
-    position: fixed; inset: 0; z-index: 5; overflow-y: auto;
-    padding: 4rem 1.25rem 3rem; background: var(--blush);
-    animation: slideIn .35s ease-out;
+  .actions .icon::after { /* brilho que percorre o ícone */
+    content: ""; position: absolute; inset: 0; border-radius: 50%;
+    background: linear-gradient(120deg, transparent 35%, rgba(255,255,255,.55) 50%, transparent 65%);
+    background-size: 250% 100%; animation: gleam 4.5s ease-in-out infinite;
   }
-  @keyframes slideIn { from { opacity: 0; transform: translateX(12%); } }
-  .dress .frame { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
-  .dress h2 { position: relative; margin: 0 0 1.2rem; font: 700 clamp(2.8rem, 13vw, 3.6rem)/1 "Bodoni Moda", serif; color: var(--rose); }
-  .dress p { position: relative; max-width: 18rem; margin: 0 auto 1rem; font-size: 1.3rem; line-height: 1.45; }
-  .dress strong { color: var(--rose-deep); }
-  .avoid { display: flex; justify-content: center; gap: 1rem; margin: 1.6rem 0 0; position: relative; }
-  .avoid li { list-style: none; display: flex; flex-direction: column; align-items: center; gap: .3rem; font-size: 1rem; }
-  .swatch { position: relative; width: 2.6rem; height: 2.6rem; border-radius: 50%; border: 2px solid var(--petal); }
-  .swatch::after { content: ""; position: absolute; left: 50%; top: -4px; bottom: -4px; width: 2px; background: var(--rose-deep); transform: rotate(45deg); }
-  .back { display: inline-block; margin-top: 2.2rem; padding: .7rem 1.4rem; border: 1.5px solid var(--rose); border-radius: 999px; text-decoration: none; color: var(--rose-deep); position: relative; }
-  footer { padding: 2rem 1rem 3rem; font: 400 2.2rem/1 "Pinyon Script", cursive; color: var(--rose); text-align: center; }
+  .actions li:nth-child(2) .icon::after { animation-delay: .4s; }
+  .actions li:nth-child(3) .icon::after { animation-delay: .8s; }
+  @keyframes gleam { 0%, 60% { background-position: 150% 0; } 100% { background-position: -100% 0; } }
+  .actions a:active .icon { transform: scale(.92); }
+  .actions svg { width: 2.2rem; height: 2.2rem; position: relative; z-index: 1; }
+  .scroll-cue { margin: 2.2rem auto 0; display: grid; justify-items: center; gap: .2rem; font: 500 .95rem/1 "Cormorant Garamond", serif; letter-spacing: .25em; text-transform: uppercase; color: var(--rose-deep); text-decoration: none; opacity: .8; }
+  .scroll-cue svg { width: 1.4rem; height: 1.4rem; animation: bob 1.8s ease-in-out infinite; }
+  @keyframes bob { 50% { transform: translateY(6px); } }
 
-  /* ---------- Escolha do app de navegação ---------- */
+  /* bloco em arco, com filete dourado duplo */
+  .block { padding: 3.2rem 1.25rem 0; }
+  .arch {
+    position: relative; padding: 3.6rem 1.4rem 2.2rem;
+    background: linear-gradient(180deg, #FFF8FA, var(--petal));
+    border-radius: 14rem 14rem 1.6rem 1.6rem;
+    box-shadow: 0 0 0 1.5px #D9B65A, 0 0 0 7px var(--blush), 0 0 0 8px #E7CC86, 0 18px 40px -18px rgba(185,71,95,.35);
+  }
+  .arch .corner { position: absolute; width: 8.5rem; pointer-events: none; }
+  .label { margin: 0; font: 400 2.3rem/1 "Pinyon Script", cursive; }
+  .title { margin: .1rem 0 0; font: 700 clamp(2.3rem, 10.5vw, 2.9rem)/1.05 "Bodoni Moda", serif; color: var(--rose); }
+  .lead { margin: .9rem auto 0; max-width: 22rem; font-size: 1.22rem; line-height: 1.45; }
+  .lead strong { color: var(--rose-deep); }
+
+  /* contagem */
+  .count { display: grid; grid-template-columns: repeat(4, 1fr); gap: .55rem; margin: 1.6rem 0 0; padding: 0; list-style: none; }
+  .count li { padding: .8rem .1rem .6rem; border-radius: 1rem; background: var(--blush); box-shadow: inset 0 0 0 1px #F0BFCB; }
+  .count b { display: block; font: 700 clamp(1.9rem, 9vw, 2.4rem)/1 "Bodoni Moda", serif; color: var(--rose-deep); font-variant-numeric: lining-nums tabular-nums; }
+  .count span { display: block; margin-top: .3rem; font-size: .92rem; letter-spacing: .12em; text-transform: uppercase; color: var(--ink); }
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: .55rem;
+    min-height: 3.1rem; padding: .75rem 1.5rem; border: 0; border-radius: 999px;
+    background: linear-gradient(180deg, #EE8BA0, var(--rose-deep)); color: #fff;
+    font: 700 1.12rem/1 "Cormorant Garamond", serif; letter-spacing: .04em; text-decoration: none; cursor: pointer;
+    box-shadow: 0 0 0 3px var(--petal), 0 0 0 4.5px #D9B65A, 0 10px 22px -10px rgba(185,71,95,.7);
+  }
+  .btn svg { width: 1.25rem; height: 1.25rem; }
+  .btn.ghost { background: transparent; color: var(--rose-deep); box-shadow: inset 0 0 0 1.5px var(--rose); }
+  .row { display: flex; flex-wrap: wrap; justify-content: center; gap: .9rem; margin-top: 1.5rem; }
+
+  /* local */
+  .map { position: relative; margin: 1.4rem 0 0; border-radius: 1.2rem; overflow: hidden; aspect-ratio: 4 / 3; box-shadow: 0 0 0 1.5px #E7CC86; background: var(--blush); }
+  .map::before { content: "Carregando o mapa…"; position: absolute; inset: 0; display: grid; place-items: center; font-style: italic; color: var(--rose-deep); }
+  .map iframe { position: relative; width: 100%; height: 100%; border: 0; filter: saturate(.75) sepia(.12) hue-rotate(-10deg); }
+
+  /* dress code */
+  .dc-name { margin: 1rem 0 0; font: 500 clamp(2.4rem, 12vw, 3rem)/1 "Bodoni Moda", serif; font-style: italic; }
+  .avoid { display: flex; justify-content: center; gap: 1.6rem; margin: 1.5rem 0 0; padding: 0; }
+  .avoid li { list-style: none; display: flex; flex-direction: column; align-items: center; gap: .4rem; font-size: 1.05rem; }
+  .swatch { position: relative; width: 3.4rem; height: 3.4rem; border-radius: 50%; box-shadow: 0 0 0 3px var(--petal), 0 0 0 4.5px #E7CC86, 0 6px 12px rgba(122,46,64,.18); }
+  .swatch::after { content: ""; position: absolute; left: 50%; top: -6px; bottom: -6px; width: 2.5px; margin-left: -1.25px; background: var(--rose-deep); transform: rotate(45deg); border-radius: 2px; }
+  .small { margin: 1.3rem auto 0; max-width: 21rem; font-size: 1.05rem; font-style: italic; color: var(--rose-deep); }
+
+  /* confirmação */
+  form { margin: 1.4rem auto 0; max-width: 22rem; text-align: left; }
+  label { display: block; margin: 0 0 .35rem; font-size: 1rem; letter-spacing: .12em; text-transform: uppercase; color: var(--rose-deep); }
+  input[type=text], input[type=tel] {
+    width: 100%; min-height: 3rem; padding: .7rem 1rem; border: 0; border-radius: .9rem;
+    background: #fff; color: var(--ink); font: 600 1.2rem/1.2 "Cormorant Garamond", serif;
+    box-shadow: inset 0 0 0 1.5px #F0BFCB;
+  }
+  input[type=text]:focus, input[type=tel]:focus { outline: none; box-shadow: inset 0 0 0 2px var(--rose); }
+  .stepper { display: flex; align-items: center; justify-content: space-between; margin-top: 1.1rem; padding: .35rem; border-radius: 999px; background: #fff; box-shadow: inset 0 0 0 1.5px #F0BFCB; }
+  .stepper button { width: 2.8rem; height: 2.8rem; border: 0; border-radius: 50%; background: var(--blush); color: var(--rose-deep); font: 700 1.6rem/1 "Bodoni Moda", serif; cursor: pointer; }
+  .stepper output { font: 700 1.25rem/1 "Cormorant Garamond", serif; color: var(--ink); }
+  form .btn { width: 100%; margin-top: 1.5rem; }
+  .field { margin-top: 1.1rem; }
+  .opt { text-transform: none; letter-spacing: 0; font-style: italic; }
+  .hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+  .privacy { margin: .4rem 0 0; font-size: .98rem; font-style: italic; text-align: center; color: var(--rose-deep); }
+  .done { margin: 1.4rem auto 0; max-width: 22rem; }
+  .done p { margin: 0 0 1.3rem; font-size: 1.25rem; line-height: 1.45; }
+  .err { min-height: 1.4em; margin: .5rem 0 0; font-size: 1rem; color: var(--rose-deep); text-align: center; }
+
+  footer { position: relative; padding: 4rem 1rem calc(3.5rem + env(safe-area-inset-bottom)); text-align: center; overflow: hidden; }
+  footer .bye { margin: 0; font: 400 clamp(3rem, 15vw, 4rem)/1 "Pinyon Script", cursive; color: var(--rose); }
+  footer .sig { margin: .6rem 0 0; font: 700 1rem/1 "Bodoni Moda", serif; letter-spacing: .5em; padding-left: .5em; color: var(--rose-deep); }
+  footer svg { display: block; width: 120%; margin: 1.2rem -10% 0; }
+
+  /* surgimento ao rolar */
+  .reveal { opacity: 0; transform: translateY(28px); transition: opacity .9s ease, transform .9s cubic-bezier(.2,.8,.2,1); }
+  .reveal.in { opacity: 1; transform: none; }
+
+  /* ---------- folha de navegação ---------- */
   .sheet {
     width: 100%; max-width: 34rem; margin: auto auto 0; padding: 1.6rem 1.25rem calc(1.2rem + env(safe-area-inset-bottom));
     border: 0; border-radius: 22px 22px 0 0;
-    background: var(--petal); color: var(--ink); text-align: center;
-    font: inherit;
+    background: var(--petal); color: var(--ink); text-align: center; font: inherit;
   }
   .sheet::backdrop { background: rgba(122,46,64,.35); }
   .sheet[open] { animation: rise .25s ease-out; }
   @keyframes rise { from { transform: translateY(100%); } }
   .sheet h3 { margin: 0; font: 700 1.9rem/1.1 "Bodoni Moda", serif; color: var(--rose); }
-  .sheet-addr { margin: .6rem auto 1.2rem; max-width: 20rem; font-size: 1.1rem; line-height: 1.4; }
-  .nav-btn {
-    display: block; margin: 0 0 .7rem; padding: .95rem 1rem; border-radius: 14px;
-    background: var(--rose); color: #fff; text-decoration: none; font-weight: 700; font-size: 1.15rem;
-  }
+  .sheet-txt { margin: .6rem auto 1.2rem; max-width: 20rem; font-size: 1.1rem; line-height: 1.4; }
+  .nav-btn { display: block; margin: 0 0 .7rem; padding: .95rem 1rem; border-radius: 14px; background: var(--rose); color: #fff; text-decoration: none; font-weight: 700; font-size: 1.15rem; }
   .nav-btn + .nav-btn { background: var(--rose-deep); }
-  .rsvp { text-align: left; margin-top: 1.2rem; }
-  .rsvp label { display: block; margin: 0 0 1rem; font-size: 1.05rem; font-weight: 700; color: var(--ink); }
-  .rsvp input, .rsvp select {
-    display: block; width: 100%; margin-top: .35rem; padding: .8rem .9rem;
-    border: 1.5px solid #E9B3C0; border-radius: 12px; background: #fff;
-    font: 600 1.1rem/1.2 "Cormorant Garamond", Georgia, serif; color: var(--ink);
-  }
-  .rsvp select {
-    -webkit-appearance: none; appearance: none; padding-right: 2.6rem;
-    background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%23B9475F' stroke-width='1.8'/%3E%3C/svg%3E") no-repeat right 1rem center / .8rem;
-  }
-  .rsvp input:focus, .rsvp select:focus { outline: none; border-color: var(--rose-deep); box-shadow: 0 0 0 3px rgba(185,71,95,.15); }
-  .rsvp .opt { font-weight: 500; color: var(--rose-deep); }
-  .rsvp .hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
-  .rsvp-error { min-height: 1.2em; margin: -.3rem 0 .6rem; color: #A3263F; font-size: 1rem; }
-  .rsvp .nav-btn { width: 100%; border: 0; cursor: pointer; font-family: inherit; }
-  .rsvp-privacy { margin: .2rem 0 0; font-size: .95rem; text-align: center; color: var(--rose-deep); }
-  .rsvp-done p { margin: 1rem 0 1.2rem; font-size: 1.2rem; line-height: 1.45; }
   .sheet-close { margin-top: .2rem; padding: .8rem 1.5rem; border: 0; background: none; font: inherit; color: var(--rose-deep); cursor: pointer; }
 
+  /* ---------- Telas únicas: nada rola; cada parte ocupa a tela inteira ---------- */
+  html, body { height: 100%; overflow: hidden; }
+  .hero {
+    height: 100vh; height: 100svh; min-height: 0;
+    padding: clamp(3.6rem, 10svh, 6.5rem) 1.25rem clamp(.8rem, 3svh, 2rem);
+    justify-content: center;
+  }
+  .kicker { font-size: min(11vw, 5.6svh, 3rem); }
+  .name { font-size: min(33vw, 18svh, 10rem); }
+  .rule { margin-top: min(.6rem, 1svh); height: min(22px, 3svh); }
+  .day { margin-top: 1.4svh; font-size: min(17vw, 8svh, 4.6rem); }
+  .date { font-size: min(19vw, 9.5svh, 5.2rem); }
+  .time { margin-top: 1svh; font-size: min(1.9rem, 4.4svh); }
+  .time span { font-size: .68em; }
+  .countdown { margin: 1.6svh 0 0; font: 600 min(1.12rem, 2.7svh)/1.2 "Cormorant Garamond", serif; letter-spacing: .05em; color: var(--rose-deep); }
+  .countdown b { font: 700 1.08em/1 "Bodoni Moda", serif; font-variant-numeric: lining-nums tabular-nums; }
+  .actions { margin-top: 3svh; }
+  .actions a { gap: min(.65rem, 1.2svh); font-size: min(1.05rem, 2.6svh); }
+  .actions .icon { width: min(4.6rem, 10.5svh); height: min(4.6rem, 10.5svh); }
+  .actions svg { width: 48%; height: 48%; }
+
+  .page {
+    position: fixed; inset: 0; z-index: 25;
+    display: flex; flex-direction: column; align-items: center;
+    padding: max(1rem, env(safe-area-inset-top, 0px)) max(1rem, env(safe-area-inset-right, 0px)) max(1rem, env(safe-area-inset-bottom, 0px)) max(1rem, env(safe-area-inset-left, 0px));
+    background: radial-gradient(circle at 50% 0%, #FFF0F3 0%, rgba(255,240,243,0) 60%), var(--blush);
+    overflow-y: auto; overscroll-behavior: contain;
+    animation: pageIn .45s cubic-bezier(.2,.8,.2,1);
+  }
+  .page[hidden] { display: none; }
+  @keyframes pageIn { from { opacity: 0; transform: translateY(3%) scale(.985); } }
+  .pf { position: fixed; width: min(42vw, 26svh); pointer-events: none; }
+  .pf-tl { top: -1.5rem; left: -1.5rem; }
+  .pf-br { bottom: -1.5rem; right: -1.5rem; }
+  .page .arch {
+    position: relative; width: 100%; max-width: 30rem; text-align: center; margin-top: auto;
+    padding: clamp(1.8rem, 5svh, 3rem) 1.2rem clamp(1.1rem, 3svh, 1.8rem);
+    border-radius: 11rem 11rem 1.6rem 1.6rem;
+  }
+  .page .label { font-size: min(2.2rem, 5svh); }
+  .page .title { font-size: min(10vw, 6svh, 2.7rem); }
+  .page .lead { margin-top: 1.2svh; font-size: min(1.2rem, 2.9svh); }
+  .when { margin: 1.4svh 0 0; font-size: min(1.1rem, 2.7svh); font-style: italic; color: var(--rose-deep); }
+  .stack { display: grid; gap: min(.9rem, 1.8svh); margin-top: 2.4svh; }
+  .stack .btn { width: 100%; min-height: min(3.1rem, 6.6svh); padding-block: .5rem; }
+  .page .dc-name { margin-top: 1.2svh; font-size: min(12vw, 6.5svh, 3rem); }
+  .page .avoid { margin-top: 2svh; }
+  .page .swatch { width: min(3.4rem, 7.5svh); height: min(3.4rem, 7.5svh); }
+  .page .small { margin-top: 1.8svh; font-size: min(1.05rem, 2.6svh); }
+  .page form { margin-top: 1.6svh; }
+  .page input[type=text], .page input[type=tel] { min-height: min(3rem, 6.4svh); padding-block: .4rem; }
+  .page .stepper { margin-top: 1.4svh; }
+  .page .stepper button { width: min(2.8rem, 6svh); height: min(2.8rem, 6svh); }
+  .page .field { margin-top: 1.4svh; }
+  .page form .btn { margin-top: 2svh; min-height: min(3.1rem, 6.6svh); padding-block: .5rem; }
+  .page .err { min-height: 1.2em; margin-top: .3rem; }
+  .page .privacy { margin-top: 0; font-size: min(.98rem, 2.4svh); }
+  .done .bye { margin: 1rem 0 .4rem; font: 400 min(3.4rem, 8svh)/1 "Pinyon Script", cursive; color: var(--rose); }
+  .done .btn { width: 100%; }
+  .pnav { position: relative; display: flex; flex-wrap: wrap; justify-content: center; gap: .7rem; margin: 1.6svh 0 auto; }
+  .back, .next {
+    display: inline-flex; align-items: center; min-height: 2.75rem; padding: .55rem 1.2rem; border-radius: 999px;
+    font: 700 1.02rem/1 "Cormorant Garamond", serif; text-decoration: none; cursor: pointer;
+  }
+  .back { border: 1.5px solid var(--rose); background: var(--petal); color: var(--rose-deep); }
+  .next { border: 0; background: var(--rose-deep); color: #fff; box-shadow: 0 0 0 2px var(--blush), 0 0 0 3.5px #D9B65A; }
+  .next::after { content: "→"; margin-left: .45rem; }
+  .page h2:focus { outline: none; }
+  .stepper output { font-family: "Bodoni Moda", serif; }
+  @media (max-height: 600px) { .page .arch { padding-top: 1.4rem; } }
+
   @media (prefers-reduced-motion: reduce) {
-    .sheet[open] { animation: none; }
     html { scroll-behavior: auto; }
-    .door, .seal, .cover, .dress:target { transition: none !important; animation: none !important; }
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+    .name span { opacity: 1; transform: none; filter: none; }
+    .rule path { stroke-dashoffset: 0; }
+    .reveal { opacity: 1; transform: none; }
+    .petals { display: none; }
   }
 </style>
 </head>
-<body class="locked">
+<body>
 
-<!-- Desenhos reutilizados (flores e folhas em aquarela) -->
+<!-- ================= Desenhos (lírios, flores e folhas em aquarela) ================= -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <defs>
-    <filter id="wc" x="-20%" y="-20%" width="140%" height="140%">
-      <feTurbulence type="fractalNoise" baseFrequency=".035" numOctaves="2" seed="4"/>
-      <feDisplacementMap in="SourceGraphic" scale="7"/>
+    <filter id="wc" x="-25%" y="-25%" width="150%" height="150%">
+      <feTurbulence type="fractalNoise" baseFrequency=".04" numOctaves="2" seed="7" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="5" result="d"/>
+      <feGaussianBlur in="d" stdDeviation=".35"/>
     </filter>
-    <radialGradient id="pLily" cx="50%" cy="100%" r="100%">
-      <stop offset="0" stop-color="#E25C7C"/><stop offset=".45" stop-color="#F2A3B4"/><stop offset="1" stop-color="#FFF1F3"/>
+    <radialGradient id="gLily" gradientUnits="userSpaceOnUse" cx="0" cy="0" r="120">
+      <stop offset="0" stop-color="#C93A60"/><stop offset=".2" stop-color="#E2627F"/>
+      <stop offset=".5" stop-color="#F4A7B9"/><stop offset=".82" stop-color="#FDDDE4"/><stop offset="1" stop-color="#FFF8FA"/>
     </radialGradient>
-    <radialGradient id="pBlossom" cx="50%" cy="90%" r="90%">
-      <stop offset="0" stop-color="#F08DA3"/><stop offset="1" stop-color="#FDE3E8"/>
+    <radialGradient id="gLilyBack" gradientUnits="userSpaceOnUse" cx="0" cy="0" r="128">
+      <stop offset="0" stop-color="#B42F55"/><stop offset=".3" stop-color="#DB5D7C"/>
+      <stop offset=".65" stop-color="#F0A0B3"/><stop offset="1" stop-color="#FCE1E7"/>
     </radialGradient>
-    <linearGradient id="gLeaf" x1="0" x2="1"><stop offset="0" stop-color="#7E9877"/><stop offset="1" stop-color="#B9CBB0"/></linearGradient>
-    <!-- lírio: 6 pétalas longas -->
+    <radialGradient id="gLilyWhite" gradientUnits="userSpaceOnUse" cx="0" cy="0" r="120">
+      <stop offset="0" stop-color="#E7B3A0"/><stop offset=".25" stop-color="#F7D7CF"/><stop offset=".7" stop-color="#FFF4EF"/><stop offset="1" stop-color="#FFFFFF"/>
+    </radialGradient>
+    <radialGradient id="gBlossom" gradientUnits="userSpaceOnUse" cx="0" cy="0" r="46">
+      <stop offset="0" stop-color="#D9496D"/><stop offset=".35" stop-color="#F08CA4"/><stop offset=".8" stop-color="#FCD3DD"/><stop offset="1" stop-color="#FFF0F3"/>
+    </radialGradient>
+    <linearGradient id="gBud" x1="0" y1="0" x2="0" y2="-1" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#B7CB9A"/><stop offset=".3" stop-color="#F3B3C2"/><stop offset="1" stop-color="#E26785"/>
+    </linearGradient>
+    <linearGradient id="gLeaf" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#6F8C67"/><stop offset=".6" stop-color="#9DB494"/><stop offset="1" stop-color="#D0DEC6"/></linearGradient>
+    <linearGradient id="gGold" x1="0" x2="1" y1="0" y2="0">
+      <stop offset="0" stop-color="#A87A12"/><stop offset=".25" stop-color="#E2B94A"/><stop offset=".4" stop-color="#FFF0B8"/>
+      <stop offset=".55" stop-color="#CFA233"/><stop offset=".8" stop-color="#93680F"/><stop offset="1" stop-color="#E6C05A"/>
+    </linearGradient>
+    <linearGradient id="gGoldRule" gradientUnits="userSpaceOnUse" x1="0" x2="300" y1="0" y2="0">
+      <stop offset="0" stop-color="#E6C05A" stop-opacity="0"/><stop offset=".2" stop-color="#C49A1C"/><stop offset=".45" stop-color="#FFF0B8"/>
+      <stop offset=".55" stop-color="#CFA233"/><stop offset=".8" stop-color="#A87A12"/><stop offset="1" stop-color="#E6C05A" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="gGoldMove" x1="0" x2="1" y1="0" y2="0" spreadMethod="reflect">
+      <stop offset="0" stop-color="#A87A12"/><stop offset=".35" stop-color="#E2B94A"/><stop offset=".5" stop-color="#FFF3C4"/>
+      <stop offset=".65" stop-color="#CFA233"/><stop offset="1" stop-color="#93680F"/>
+      <animateTransform attributeName="gradientTransform" type="translate" values="-1 0; 1 0" dur="4s" repeatCount="indefinite"/>
+    </linearGradient>
+
+    <path id="petalF" d="M0 0 C-20 -22 -25 -72 -7 -112 C-3 -121 3 -121 7 -112 C25 -72 20 -22 0 0Z"/>
+    <path id="petalB" d="M0 0 C-27 -24 -31 -82 -6 -124 C0 -130 5 -128 9 -120 C31 -82 27 -24 0 0Z"/>
+    <g id="rib"><path d="M0 -6 Q2 -60 0 -104" fill="none" stroke="#B9405F" stroke-width="1.3" opacity=".45"/>
+      <g fill="#A8304F" opacity=".55"><circle cx="-4" cy="-26" r="1.6"/><circle cx="4" cy="-33" r="1.4"/><circle cx="-3" cy="-41" r="1.3"/><circle cx="5" cy="-20" r="1.5"/><circle cx="-6" cy="-15" r="1.2"/><circle cx="2" cy="-48" r="1"/></g>
+    </g>
+    <g id="stamen"><path d="M0 0 Q12 -38 8 -74" fill="none" stroke="#EEF3DF" stroke-width="1.8"/><ellipse cx="8" cy="-77" rx="3.2" ry="8" fill="#9C3E25" transform="rotate(12 8 -77)"/></g>
+
+    <!-- lírio rosa -->
     <g id="lily" filter="url(#wc)">
-      <g fill="url(#pLily)" opacity=".92">
-        <path id="lp" d="M0 0 C-14 -30 -12 -70 0 -100 C12 -70 14 -30 0 0Z"/>
-        <use href="#lp" transform="rotate(60)"/><use href="#lp" transform="rotate(120)"/>
-        <use href="#lp" transform="rotate(180)"/><use href="#lp" transform="rotate(240)"/><use href="#lp" transform="rotate(300)"/>
+      <g fill="url(#gLilyBack)">
+        <use href="#petalB" transform="rotate(30)"/><use href="#petalB" transform="rotate(150)"/><use href="#petalB" transform="rotate(270)"/>
       </g>
-      <g stroke="#C04A64" stroke-width="1.6" fill="none" opacity=".55">
-        <path d="M0 -10 L0 -60M8 -8 L40 -40M-8 -8 L-40 -40M8 6 L42 30M-8 6 L-42 30"/>
+      <g fill="url(#gLily)">
+        <use href="#petalF" transform="rotate(90)"/><use href="#petalF" transform="rotate(210)"/><use href="#petalF" transform="rotate(330)"/>
       </g>
-      <g fill="#C66A2E"><circle cx="0" cy="-62" r="4"/><circle cx="42" cy="-42" r="4"/><circle cx="-42" cy="-42" r="4"/><circle cx="44" cy="32" r="4"/><circle cx="-44" cy="32" r="4"/></g>
+      <use href="#rib" transform="rotate(30)"/><use href="#rib" transform="rotate(90)"/><use href="#rib" transform="rotate(150)"/>
+      <use href="#rib" transform="rotate(210)"/><use href="#rib" transform="rotate(270)"/><use href="#rib" transform="rotate(330)"/>
+      <use href="#stamen" transform="rotate(-50)"/><use href="#stamen" transform="rotate(-15)"/><use href="#stamen" transform="rotate(20)"/>
+      <use href="#stamen" transform="rotate(60)"/><use href="#stamen" transform="rotate(110) scale(.9)"/><use href="#stamen" transform="rotate(-100) scale(.9)"/>
+      <path d="M0 0 Q-5 -40 -3 -84" fill="none" stroke="#C6D9A8" stroke-width="2.4"/><circle cx="-3" cy="-86" r="4.2" fill="#B3CB8A"/>
     </g>
-    <!-- flor pequena: 5 pétalas redondas -->
+    <!-- lírio claro (como o branco do convite dela) -->
+    <g id="lilyWhite" filter="url(#wc)">
+      <g fill="url(#gLilyWhite)" stroke="#EBC7C7" stroke-width=".8">
+        <use href="#petalB" transform="rotate(30)"/><use href="#petalB" transform="rotate(150)"/><use href="#petalB" transform="rotate(270)"/>
+        <use href="#petalF" transform="rotate(90)"/><use href="#petalF" transform="rotate(210)"/><use href="#petalF" transform="rotate(330)"/>
+      </g>
+      <use href="#stamen" transform="rotate(-40)"/><use href="#stamen" transform="rotate(0)"/><use href="#stamen" transform="rotate(40)"/><use href="#stamen" transform="rotate(80) scale(.9)"/>
+      <path d="M0 0 Q-5 -40 -3 -80" fill="none" stroke="#C6D9A8" stroke-width="2.4"/><circle cx="-3" cy="-82" r="4" fill="#B3CB8A"/>
+    </g>
+    <!-- botão de lírio -->
+    <g id="bud" filter="url(#wc)">
+      <path d="M0 0 C-14 -22 -14 -74 0 -110 C14 -74 14 -22 0 0Z" fill="url(#gBud)"/>
+      <path d="M0 -6 Q3 -60 0 -104" fill="none" stroke="#C04A68" stroke-width="1.1" opacity=".5"/>
+    </g>
+    <!-- flor de 5 pétalas -->
+    <path id="bp" d="M0 0 C-17 -6 -24 -32 -11 -43 C-6 -47 -1 -43 0 -38 C1 -43 6 -47 11 -43 C24 -32 17 -6 0 0Z"/>
     <g id="blossom" filter="url(#wc)">
-      <g fill="url(#pBlossom)" opacity=".9">
-        <ellipse id="bp" cx="0" cy="-24" rx="17" ry="24"/>
-        <use href="#bp" transform="rotate(72)"/><use href="#bp" transform="rotate(144)"/><use href="#bp" transform="rotate(216)"/><use href="#bp" transform="rotate(288)"/>
+      <g fill="url(#gBlossom)">
+        <use href="#bp"/><use href="#bp" transform="rotate(72)"/><use href="#bp" transform="rotate(144)"/><use href="#bp" transform="rotate(216)"/><use href="#bp" transform="rotate(288)"/>
       </g>
-      <circle r="7" fill="#E9B44C"/><circle r="3" fill="#B5462C"/>
+      <g stroke="#C23F62" stroke-width="1" opacity=".7">
+        <path d="M0 0 L0 -17M0 0 L15 -6M0 0 L10 13M0 0 L-10 13M0 0 L-15 -6M0 0 L8 -15M0 0 L-8 -15"/>
+      </g>
+      <g fill="#F2C14E"><circle cy="-18" r="2"/><circle cx="16" cy="-6" r="2"/><circle cx="10" cy="14" r="2"/><circle cx="-10" cy="14" r="2"/><circle cx="-16" cy="-6" r="2"/><circle cx="8" cy="-16" r="1.6"/><circle cx="-8" cy="-16" r="1.6"/></g>
+      <circle r="3.2" fill="#A93A55"/>
     </g>
-    <g id="leaf" filter="url(#wc)"><path d="M0 0 C20 -20 20 -60 0 -90 C-20 -60 -20 -20 0 0Z" fill="url(#gLeaf)" opacity=".85"/></g>
+    <!-- folha com nervura -->
+    <g id="leaf" filter="url(#wc)">
+      <path d="M0 0 C22 -22 22 -66 0 -100 C-22 -66 -22 -22 0 0Z" fill="url(#gLeaf)" opacity=".9"/>
+      <path d="M0 -4 Q2 -50 0 -94" fill="none" stroke="#5E7A57" stroke-width="1.2" opacity=".55"/>
+    </g>
+    <!-- estrelinha dourada -->
+    <path id="spark" d="M0 -8 C1 -2 2 -1 8 0 C2 1 1 2 0 8 C-1 2 -2 1 -8 0 C-2 -1 -1 -2 0 -8Z"/>
   </defs>
 </svg>
 
+<div class="petals" id="petals" aria-hidden="true"></div>
+
+<!-- ================= Capa ================= -->
 <div class="cover" id="cover">
   <div class="door left" aria-hidden="true">
     <svg viewBox="0 0 200 800" preserveAspectRatio="xMinYMid slice">
-      <use href="#leaf" transform="translate(150 760) rotate(-25) scale(1.1)"/>
-      <use href="#lily" transform="translate(40 90) rotate(15) scale(1)"/>
-      <use href="#blossom" transform="translate(110 210) scale(1.1)"/>
-      <use href="#blossom" transform="translate(20 260) rotate(30) scale(.8)"/>
-      <use href="#lily" transform="translate(30 520) rotate(-20) scale(.95)"/>
-      <use href="#blossom" transform="translate(90 640) rotate(12) scale(1.2)"/>
-      <use href="#leaf" transform="translate(130 720) rotate(20) scale(.9)"/>
+      <use href="#leaf" transform="translate(70 170) rotate(-150) scale(.9)"/>
+      <use href="#lily" transform="translate(30 70) rotate(18) scale(1.15)"/>
+      <use href="#blossom" transform="translate(118 190) scale(1.1)"/>
+      <use href="#bud" transform="translate(10 300) rotate(35) scale(.8)"/>
+      <use href="#blossom" transform="translate(30 250) rotate(30) scale(.75)"/>
+      <use href="#lilyWhite" transform="translate(-10 430) rotate(-10) scale(1.05)"/>
+      <use href="#leaf" transform="translate(140 790) rotate(-25) scale(1.3)"/>
+      <use href="#leaf" transform="translate(100 800) rotate(-5) scale(1)"/>
+      <use href="#lily" transform="translate(35 620) rotate(-22) scale(1.05)"/>
+      <use href="#blossom" transform="translate(120 690) rotate(12) scale(1.15)"/>
     </svg>
   </div>
   <div class="door right" aria-hidden="true">
     <svg viewBox="0 0 200 800" preserveAspectRatio="xMaxYMid slice">
-      <use href="#lily" transform="translate(160 80) rotate(-10) scale(1.05)"/>
-      <use href="#blossom" transform="translate(190 250) scale(.9)"/>
-      <use href="#lily" transform="translate(170 400) rotate(25) scale(.9)"/>
-      <use href="#leaf" transform="translate(185 610) rotate(-40) scale(1)"/>
-      <use href="#blossom" transform="translate(150 560) rotate(40) scale(1.1)"/>
-      <use href="#lily" transform="translate(180 720) rotate(5) scale(1.1)"/>
+      <use href="#lilyWhite" transform="translate(175 60) rotate(-12) scale(1.1)"/>
+      <use href="#leaf" transform="translate(110 300) rotate(-40) scale(.9)"/>
+      <use href="#lily" transform="translate(180 270) rotate(24) scale(1.05)"/>
+      <use href="#blossom" transform="translate(110 150) scale(.8)"/>
+      <use href="#bud" transform="translate(200 470) rotate(-30) scale(.85)"/>
+      <use href="#blossom" transform="translate(165 440) rotate(40) scale(1.05)"/>
+      <use href="#leaf" transform="translate(190 610) rotate(-40) scale(1.1)"/>
+      <use href="#lily" transform="translate(180 680) rotate(5) scale(1.2)"/>
+      <use href="#blossom" transform="translate(100 600) rotate(10) scale(.85)"/>
     </svg>
   </div>
 
-  <!-- Selo + texto curvo formam UM único botão: o toque funciona em qualquer parte -->
   <button class="seal" id="open" type="button" aria-label="Abrir o convite">
-    <svg viewBox="-130 -130 260 260" aria-hidden="true">
+    <svg viewBox="-140 -140 280 280" aria-hidden="true">
       <defs>
-        <radialGradient id="wax" cx="40%" cy="35%" r="75%">
-          <stop offset="0" stop-color="#FFC3D1"/><stop offset=".6" stop-color="#F28CA6"/><stop offset="1" stop-color="#D9677F"/>
+        <radialGradient id="wax" cx="38%" cy="32%" r="78%">
+          <stop offset="0" stop-color="#FFD0DB"/><stop offset=".45" stop-color="#F59AB0"/><stop offset=".85" stop-color="#DD6884"/><stop offset="1" stop-color="#C9566F"/>
         </radialGradient>
-        <path id="arc" d="M -96 40 A 104 104 0 1 1 40 96"/>
+        <radialGradient id="waxIn" cx="60%" cy="65%" r="70%">
+          <stop offset="0" stop-color="#F6A2B6"/><stop offset="1" stop-color="#E77A93"/>
+        </radialGradient>
+        <path id="arc" d="M -104 42 A 112 112 0 1 1 42 104"/>
       </defs>
-      <text font-family="Cormorant Garamond, serif" font-weight="700" font-size="27" fill="#C49A1C" letter-spacing="1">
+      <text font-family="Cormorant Garamond, serif" font-weight="700" font-size="28" fill="url(#gGoldMove)" letter-spacing="1.5">
         <textPath href="#arc" startOffset="2%">Toque para abrir</textPath>
       </text>
       <path id="waxEdge" fill="url(#wax)"/>
-      <circle r="52" fill="none" stroke="#FFE1E8" stroke-width="2" opacity=".8"/>
-      <circle r="58" fill="none" stroke="#C85A73" stroke-width="1.2" opacity=".35"/>
-      <g fill="none" stroke="#FFD9E1" stroke-width="1.6" opacity=".9">
-        <path d="M-30 32 C-50 10 -48 -20 -30 -38"/><path d="M30 32 C50 10 48 -20 30 -38"/>
+      <circle r="56" fill="url(#waxIn)"/>
+      <circle r="56" fill="none" stroke="#C85A73" stroke-width="2.2" opacity=".45"/>
+      <circle r="52" fill="none" stroke="#FFE1E8" stroke-width="1.4" opacity=".9"/>
+      <!-- louros em relevo -->
+      <g fill="none" stroke="#FFDCE4" stroke-width="1.6" opacity=".95">
+        <path d="M-6 42 C-36 34 -46 6 -36 -30"/><path d="M6 42 C36 34 46 6 36 -30"/>
       </g>
-      <g fill="#FFD9E1" opacity=".9">
-        <ellipse cx="-44" cy="0" rx="3" ry="6" transform="rotate(-20 -44 0)"/><ellipse cx="-40" cy="-20" rx="3" ry="6" transform="rotate(-50 -40 -20)"/><ellipse cx="-42" cy="20" rx="3" ry="6" transform="rotate(20 -42 20)"/>
-        <ellipse cx="44" cy="0" rx="3" ry="6" transform="rotate(20 44 0)"/><ellipse cx="40" cy="-20" rx="3" ry="6" transform="rotate(50 40 -20)"/><ellipse cx="42" cy="20" rx="3" ry="6" transform="rotate(-20 42 20)"/>
+      <g fill="#FFDCE4" opacity=".95">
+        <ellipse cx="-40" cy="-18" rx="3.2" ry="7" transform="rotate(-25 -40 -18)"/><ellipse cx="-43" cy="0" rx="3.2" ry="7" transform="rotate(-5 -43 0)"/>
+        <ellipse cx="-38" cy="18" rx="3.2" ry="7" transform="rotate(25 -38 18)"/><ellipse cx="-24" cy="34" rx="3.2" ry="7" transform="rotate(55 -24 34)"/>
+        <ellipse cx="40" cy="-18" rx="3.2" ry="7" transform="rotate(25 40 -18)"/><ellipse cx="43" cy="0" rx="3.2" ry="7" transform="rotate(5 43 0)"/>
+        <ellipse cx="38" cy="18" rx="3.2" ry="7" transform="rotate(-25 38 18)"/><ellipse cx="24" cy="34" rx="3.2" ry="7" transform="rotate(-55 24 34)"/>
       </g>
-      <text y="22" text-anchor="middle" font-family="Pinyon Script, cursive" font-size="74" fill="#FFF0F3" stroke="#D9677F" stroke-width=".8">A</text>
+      <text y="20" text-anchor="middle" font-family="Pinyon Script, cursive" font-size="76" fill="#FFF0F3" stroke="#C9566F" stroke-width="1">A</text>
+      <!-- reflexo da cera -->
+      <ellipse cx="-34" cy="-48" rx="22" ry="9" fill="#fff" opacity=".35" transform="rotate(-35 -34 -48)"/>
+      <!-- brilhos -->
+      <g fill="url(#gGold)">
+        <g transform="translate(100 -78) scale(1.5)"><use href="#spark" class="twinkle"/></g>
+        <g transform="translate(-118 -96) scale(1.1)"><use href="#spark" class="twinkle" style="animation-delay:.8s"/></g>
+        <g transform="translate(118 70) scale(1)"><use href="#spark" class="twinkle" style="animation-delay:1.5s"/></g>
+        <g transform="translate(-20 126) scale(1.2)"><use href="#spark" class="twinkle" style="animation-delay:.4s"/></g>
+      </g>
     </svg>
   </button>
+  <p class="hint" aria-hidden="true">Meus 15 anos</p>
 </div>
 
+<!-- ================= Convite ================= -->
 <main id="convite" tabindex="-1">
   <section class="hero" aria-labelledby="nome">
-    <svg class="bloom" viewBox="0 0 400 120" aria-hidden="true">
-      <use href="#lily" transform="translate(30 30) rotate(30) scale(.7)"/>
-      <use href="#blossom" transform="translate(110 10) scale(.8)"/>
-      <use href="#lily" transform="translate(370 25) rotate(-20) scale(.75)"/>
-      <use href="#blossom" transform="translate(300 5) rotate(20) scale(.7)"/>
+    <svg class="garland" viewBox="0 0 460 170" aria-hidden="true">
+      <use href="#leaf" transform="translate(70 30) rotate(-120) scale(.7)"/>
+      <use href="#lily" transform="translate(30 20) rotate(30) scale(.75)"/>
+      <use href="#blossom" transform="translate(120 20) scale(.85)"/>
+      <use href="#bud" transform="translate(150 -10) rotate(130) scale(.55)"/>
+      <use href="#blossom" transform="translate(178 -6) rotate(25) scale(.55)"/>
+      <use href="#leaf" transform="translate(390 40) rotate(120) scale(.7)"/>
+      <use href="#lilyWhite" transform="translate(440 18) rotate(-15) scale(.8)"/>
+      <use href="#blossom" transform="translate(345 16) rotate(20) scale(.8)"/>
+      <use href="#bud" transform="translate(310 -8) rotate(-130) scale(.55)"/>
+      <use href="#blossom" transform="translate(288 -4) rotate(-10) scale(.5)"/>
     </svg>
-    <h1 class="name" id="nome">ANA</h1>
+    <p class="kicker foil">Meus 15 anos</p>
+    <h1 class="name" id="nome" aria-label="Ana"><span>A</span><span>N</span><span>A</span></h1>
+    <svg class="rule" viewBox="0 0 300 22" aria-hidden="true">
+      <path d="M0 11 H128 M172 11 H300" stroke="url(#gGoldRule)" stroke-width="2" fill="none"/>
+      <path d="M150 1 L161 11 L150 21 L139 11 Z" stroke="url(#gGoldRule)" stroke-width="2" fill="none"/>
+      <path d="M150 6 L155 11 L150 16 L145 11 Z" fill="url(#gGoldRule)"/>
+    </svg>
     <p class="day">Sábado</p>
     <p class="date"><time datetime="2026-12-12">12/12</time></p>
     <p class="time"><time datetime="19:30">19:30</time><span>às</span><time datetime="02:00">02:00</time></p>
+    <p class="countdown" id="countdown">faltam <b id="c-d">--</b> dias · <b id="c-h">--</b>h <b id="c-m">--</b>min <b id="c-s">--</b>s</p>
 
+    <!-- ordem da história do convidado: onde é → o que vestir → confirmar -->
     <ul class="actions">
       <li>
-        <a id="lnk-local" href="#como-chegar" aria-haspopup="dialog">
+        <a href="#local">
           <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-6.5-6.2-6.5-11.2a6.5 6.5 0 0 1 13 0C18.5 14.8 12 21 12 21Z"/><circle cx="12" cy="9.8" r="2.4"/></svg></span>
           Localização
-        </a>
-      </li>
-      <li>
-        <a id="lnk-rsvp" href="#confirmar" aria-haspopup="dialog">
-          <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="8" r="3.5"/><path d="M3.5 19.5c.8-3.4 3.4-5.5 6.5-5.5 1.3 0 2.5.3 3.5 1"/><path d="m14.5 18 2.2 2.2 4.3-4.7"/></svg></span>
-          Confirmar presença
         </a>
       </li>
       <li>
@@ -287,159 +545,271 @@
           Dress code
         </a>
       </li>
+      <li>
+        <a href="#confirmar">
+          <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="8" r="3.5"/><path d="M3.5 19.5c.8-3.4 3.4-5.5 6.5-5.5 1.3 0 2.5.3 3.5 1"/><path d="m14.5 18 2.2 2.2 4.3-4.7"/></svg></span>
+          Confirmar presença
+        </a>
+      </li>
     </ul>
-    <p class="note" id="note" role="status"></p>
-    <p class="address" id="address"></p>
   </section>
-
-  <section class="dress" id="dress-code" aria-labelledby="dc-title">
-    <svg class="frame" viewBox="0 0 400 600" preserveAspectRatio="none" aria-hidden="true">
-      <use href="#lily" transform="translate(0 40) rotate(40) scale(.7)"/>
-      <use href="#blossom" transform="translate(20 300) scale(.8)"/>
-      <use href="#leaf" transform="translate(10 560) rotate(30) scale(.8)"/>
-      <use href="#lily" transform="translate(400 120) rotate(-30) scale(.7)"/>
-      <use href="#blossom" transform="translate(385 420) rotate(25) scale(.85)"/>
-    </svg>
-    <h2 id="dc-title">Dress code</h2>
-    <p>Para esta ocasião especial, o traje solicitado é <strong>Social Fino</strong>.</p>
-    <p>Pedimos gentilmente que evitem peças em qualquer tom de rosa ou prata.</p>
-    <ul class="avoid" aria-label="Cores a evitar">
-      <li><span class="swatch" style="background:#F3A6BA"></span>Rosa</li>
-      <li><span class="swatch" style="background:linear-gradient(135deg,#F2F2F2,#A9A9AE 55%,#E4E4E7)"></span>Prata</li>
-    </ul>
-    <p style="margin-top:1.6rem">Contamos com sua compreensão.</p>
-    <p><a class="back" href="#convite">Voltar</a></p>
-  </section>
-  <footer>Te espero!</footer>
 </main>
 
-<dialog class="sheet" id="como-chegar" aria-labelledby="cc-title">
-  <h3 id="cc-title" tabindex="-1" autofocus style="outline:none">Como chegar</h3>
-  <p class="sheet-addr" id="sheet-addr"></p>
-  <a class="nav-btn" id="nav-maps" target="_blank" rel="noopener">Abrir no Google Maps</a>
-  <a class="nav-btn" id="nav-waze" target="_blank" rel="noopener">Abrir no Waze</a>
-  <button class="sheet-close" type="button" id="sheet-close">Fechar</button>
-</dialog>
-
-<dialog class="sheet" id="confirmar" aria-labelledby="rsvp-title">
-  <h3 id="rsvp-title" tabindex="-1" autofocus style="outline:none">Confirmar presença</h3>
-  <form id="rsvp-form" class="rsvp" novalidate>
-    <label>Seu nome
-      <input name="nome" id="rsvp-nome" autocomplete="name" required maxlength="80" placeholder="Nome e sobrenome">
-    </label>
-    <label>Quantas pessoas, contando você
-      <select name="pessoas">
-        <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option>
-      </select>
-    </label>
-    <label>Telefone <span class="opt">(opcional)</span>
-      <input name="telefone" type="tel" inputmode="tel" autocomplete="tel" maxlength="20" placeholder="(11) 90000-0000">
-    </label>
-    <input name="site" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
-    <p class="rsvp-error" id="rsvp-error" role="alert"></p>
-    <button class="nav-btn" type="submit">Confirmar e abrir o WhatsApp</button>
-    <p class="rsvp-privacy">Seus dados servem só para a lista de convidados da Ana.</p>
-  </form>
-  <div class="rsvp-done" id="rsvp-done" hidden>
-    <p id="rsvp-thanks"></p>
-    <a class="nav-btn" id="rsvp-wa" target="_blank" rel="noopener">Abrir o WhatsApp de novo</a>
+<!-- ================= Telas próprias: uma de cada vez, sem rolagem ================= -->
+<section class="page" id="local" role="dialog" aria-modal="true" aria-labelledby="t-local" hidden>
+  <svg class="pf pf-tl" viewBox="0 0 200 200" aria-hidden="true"><use href="#leaf" transform="translate(70 70) rotate(-130) scale(.8)"/><use href="#lily" transform="translate(25 25) rotate(25) scale(.8)"/><use href="#blossom" transform="translate(110 30) scale(.75)"/></svg>
+  <svg class="pf pf-br" viewBox="0 0 200 200" aria-hidden="true"><use href="#leaf" transform="translate(130 140) rotate(50) scale(.8)"/><use href="#lilyWhite" transform="translate(175 175) rotate(-20) scale(.8)"/><use href="#blossom" transform="translate(95 175) rotate(20) scale(.7)"/></svg>
+  <div class="arch">
+    <p class="label foil">onde</p>
+    <h2 class="title" id="t-local">Localização</h2>
+    <p class="lead" id="address"></p>
+    <p class="when">Sábado, 12 de dezembro de 2026<br>das 19:30 às 02:00</p>
+    <div class="stack">
+      <a class="btn" id="nav-maps2" target="_blank" rel="noopener">Abrir no Google Maps</a>
+      <a class="btn ghost" id="nav-waze2" target="_blank" rel="noopener">Abrir no Waze</a>
+      <a class="btn ghost" id="btn-agenda" target="_blank" rel="noopener">Salvar na agenda</a>
+    </div>
   </div>
-  <button class="sheet-close" type="button" id="rsvp-close">Fechar</button>
-</dialog>
+  <nav class="pnav">
+    <button class="back" type="button" data-back>Voltar ao convite</button>
+    <a class="next" href="#dress-code">Próximo: Dress code</a>
+  </nav>
+</section>
+
+<section class="page" id="dress-code" role="dialog" aria-modal="true" aria-labelledby="t-dress" hidden>
+  <svg class="pf pf-tl" viewBox="0 0 200 200" aria-hidden="true"><use href="#leaf" transform="translate(70 70) rotate(-130) scale(.8)"/><use href="#lilyWhite" transform="translate(25 25) rotate(25) scale(.8)"/><use href="#blossom" transform="translate(110 30) scale(.75)"/></svg>
+  <svg class="pf pf-br" viewBox="0 0 200 200" aria-hidden="true"><use href="#leaf" transform="translate(130 140) rotate(50) scale(.8)"/><use href="#lily" transform="translate(175 175) rotate(-20) scale(.8)"/><use href="#blossom" transform="translate(95 175) rotate(20) scale(.7)"/></svg>
+  <div class="arch">
+    <p class="label foil">traje</p>
+    <h2 class="title" id="t-dress">Dress code</h2>
+    <p class="lead">Para esta ocasião especial, o traje solicitado é</p>
+    <p class="dc-name foil">Social Fino</p>
+    <p class="lead">Pedimos gentilmente que evitem peças em qualquer tom de <strong>rosa</strong> ou <strong>prata</strong>.</p>
+    <ul class="avoid" aria-label="Cores a evitar">
+      <li><span class="swatch" style="background:radial-gradient(circle at 35% 30%,#FAC3D0,#EE8AA2)"></span>Rosa</li>
+      <li><span class="swatch" style="background:linear-gradient(135deg,#FAFAFB,#A9A9AE 50%,#E8E8EA 70%,#B9B9BE)"></span>Prata</li>
+    </ul>
+    <p class="small">Essas cores são só da aniversariante. Contamos com sua compreensão.</p>
+  </div>
+  <nav class="pnav">
+    <button class="back" type="button" data-back>Voltar ao convite</button>
+    <a class="next" href="#confirmar">Próximo: Confirmar</a>
+  </nav>
+</section>
+
+<section class="page" id="confirmar" role="dialog" aria-modal="true" aria-labelledby="t-rsvp" hidden>
+  <svg class="pf pf-tl" viewBox="0 0 200 200" aria-hidden="true"><use href="#leaf" transform="translate(70 70) rotate(-130) scale(.8)"/><use href="#lily" transform="translate(25 25) rotate(25) scale(.8)"/><use href="#blossom" transform="translate(110 30) scale(.75)"/></svg>
+  <svg class="pf pf-br" viewBox="0 0 200 200" aria-hidden="true"><use href="#leaf" transform="translate(130 140) rotate(50) scale(.8)"/><use href="#lily" transform="translate(175 175) rotate(-20) scale(.8)"/><use href="#blossom" transform="translate(95 175) rotate(20) scale(.7)"/></svg>
+  <div class="arch">
+    <p class="label foil">confirme</p>
+    <h2 class="title" id="t-rsvp">Confirmar presença</h2>
+    <form id="rsvp" novalidate>
+      <label for="f-nome">Seu nome</label>
+      <input type="text" id="f-nome" name="nome" autocomplete="name" maxlength="80" placeholder="Nome e sobrenome" required>
+      <div class="stepper" role="group" aria-label="Quantidade de pessoas">
+        <button type="button" id="f-menos" aria-label="Menos uma pessoa">−</button>
+        <output id="f-qtd" aria-live="polite">1 pessoa</output>
+        <button type="button" id="f-mais" aria-label="Mais uma pessoa">+</button>
+      </div>
+      <div class="field">
+        <label for="f-tel">Telefone <span class="opt">(opcional)</span></label>
+        <input type="tel" id="f-tel" name="telefone" inputmode="tel" autocomplete="tel" maxlength="20" placeholder="(11) 90000-0000">
+      </div>
+      <input name="site" id="f-site" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <button class="btn" type="submit">Confirmar e abrir o WhatsApp</button>
+      <p class="err" id="f-err" role="status"></p>
+      <p class="privacy">Seus dados servem só para a lista de convidados da Ana.</p>
+    </form>
+    <div class="done" id="f-done" hidden>
+      <p class="bye">Te espero!</p>
+      <p id="f-thanks"></p>
+      <a class="btn" id="f-wa" target="_blank" rel="noopener">Enviar mensagem no WhatsApp</a>
+    </div>
+  </div>
+  <nav class="pnav">
+    <button class="back" type="button" data-back>Voltar ao convite</button>
+  </nav>
+</section>
 
 <script>
   // ==== CONFIGURE AQUI ====
   const CONFIG = {
-    // WhatsApp: 55 + DDD + número, só dígitos (ex.: 5511987654321)
     whatsapp: "5511971689015",
-    // App da Web do Google Apps Script que grava na planilha de confirmações (vazio = só WhatsApp)
+    // App da Web do Google Apps Script que grava na planilha de confirmações (o mesmo do convite original; vazio = só WhatsApp)
     planilhaUrl: "https://script.google.com/macros/s/AKfycbzG5gIWNU5z3W3-C7-mkOJnDUUzEJjlyuyAZyhZtTbo9Q-bgIztwYAbONAI8tJxfeZc2Q/exec",
     endereco: "R. José Angelo Rodrigues, 17 – Embu Mirim, Itapecerica da Serra – SP, 06854-127",
-    // ID do local no Google (mantém o pino exato no Maps)
-    googlePlaceId: "ChIJ3aEFx9msz5QRvFUQXyI5sgU"
+    googlePlaceId: "ChIJ3aEFx9msz5QRvFUQXyI5sgU",
+    inicio: "2026-12-12T19:30:00-03:00",
+    fim: "2026-12-13T02:00:00-03:00"
   };
   // ========================
 
-  // rota a partir de onde o convidado está (sem ponto de partida fixo)
+  document.body.classList.add("locked");
+  const $ = id => document.getElementById(id);
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
   const destino = encodeURIComponent(CONFIG.endereco.replace(/–/g, "-"));
   const MAPS_URL = `https://www.google.com/maps/dir/?api=1&destination=${destino}&destination_place_id=${CONFIG.googlePlaceId}`;
   const WAZE_URL = `https://waze.com/ul?q=${destino}&navigate=yes`;
+
   // contorno ondulado do lacre de cera
   (() => {
     const pts = [];
-    for (let i = 0; i <= 360; i += 4) {
-      const a = i * Math.PI / 180, r = 72 + 5 * Math.sin(a * 9) + 2 * Math.sin(a * 23);
+    for (let i = 0; i <= 360; i += 3) {
+      const a = i * Math.PI / 180, r = 78 + 5.5 * Math.sin(a * 9) + 2.2 * Math.sin(a * 23 + 1);
       pts.push(`${(r * Math.cos(a)).toFixed(1)} ${(r * Math.sin(a)).toFixed(1)}`);
     }
-    document.getElementById("waxEdge").setAttribute("d", "M" + pts.join("L") + "Z");
+    $("waxEdge").setAttribute("d", "M" + pts.join("L") + "Z");
   })();
 
-  const cover = document.getElementById("cover");
-  document.getElementById("open").addEventListener("click", () => {
+  // pétalas que caem devagar no fundo
+  const petals = $("petals");
+  function spawnPetals(n) {
+    for (let i = 0; i < n; i++) {
+      const p = document.createElement("span");
+      p.className = "petal";
+      p.style.left = Math.random() * 100 + "vw";
+      p.style.setProperty("--s", (9 + Math.random() * 9).toFixed(1) + "px");
+      p.style.setProperty("--d", (11 + Math.random() * 9).toFixed(1) + "s");
+      p.style.setProperty("--delay", (-Math.random() * 20).toFixed(1) + "s");
+      p.style.setProperty("--dx", (Math.random() * 30 - 15).toFixed(1) + "vw");
+      p.style.setProperty("--r", (Math.random() * 540 - 270).toFixed(0) + "deg");
+      petals.appendChild(p);
+    }
+  }
+
+  // explosão de pétalas e brilhos ao abrir o lacre
+  function burst() {
+    const cx = innerWidth / 2, cy = innerHeight / 2;
+    for (let i = 0; i < 46; i++) {
+      const p = document.createElement("span");
+      const gold = i % 4 === 0;
+      p.className = "petal";
+      p.style.cssText = `left:${cx}px;top:${cy}px;--s:${gold ? 7 : 10 + Math.random() * 10}px;animation:none;` +
+        (gold ? "background:linear-gradient(135deg,#FFF0B8,#C49A1C);border-radius:50%;" : "");
+      petals.appendChild(p);
+      const ang = Math.random() * Math.PI * 2, dist = 120 + Math.random() * Math.max(innerWidth, innerHeight) * .55;
+      const dx = Math.cos(ang) * dist, dy = Math.sin(ang) * dist;
+      p.animate([
+        { transform: "translate(-50%,-50%) scale(.4) rotate(0deg)", opacity: 1 },
+        { transform: `translate(calc(-50% + ${dx * .8}px), calc(-50% + ${dy * .8}px)) scale(1) rotate(${Math.random() * 360}deg)`, opacity: 1, offset: .55 },
+        { transform: `translate(calc(-50% + ${dx}px), calc(-50% + ${dy + 260}px)) scale(.9) rotate(${Math.random() * 720}deg)`, opacity: 0 }
+      ], { duration: 1800 + Math.random() * 1200, easing: "cubic-bezier(.15,.7,.35,1)", fill: "forwards" })
+        .onfinish = () => p.remove();
+    }
+  }
+
+  const cover = $("cover");
+  $("open").addEventListener("click", () => {
+    if (navigator.vibrate) navigator.vibrate(25);
     cover.classList.add("open");
     document.body.classList.remove("locked");
-    document.getElementById("convite").focus({ preventScroll: true });
+    document.body.classList.add("ready");
+    $("convite").focus({ preventScroll: true });
+    if (!reduce) { burst(); spawnPetals(innerWidth < 600 ? 14 : 22); }
   });
 
-  const sheet = document.getElementById("como-chegar");
-  document.getElementById("address").textContent = CONFIG.endereco;
-  document.getElementById("sheet-addr").textContent = CONFIG.endereco;
-  document.getElementById("nav-maps").href = MAPS_URL;
-  document.getElementById("nav-waze").href = WAZE_URL;
-  document.getElementById("lnk-local").addEventListener("click", e => {
-    if (typeof sheet.showModal !== "function") return; // navegador antigo: segue a âncora
-    e.preventDefault();
-    sheet.showModal();
-  });
-  document.getElementById("sheet-close").addEventListener("click", () => sheet.close());
-  sheet.addEventListener("click", e => { if (e.target === sheet) sheet.close(); }); // toque fora fecha
-  sheet.querySelectorAll(".nav-btn").forEach(a => a.addEventListener("click", () => setTimeout(() => sheet.close(), 300)));
+  // surgimento das seções ao rolar
+  const io = new IntersectionObserver(es => es.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); }
+  }), { threshold: .15 });
+  document.querySelectorAll(".reveal").forEach(el => io.observe(el));
 
-  // ---------- Confirmação: grava na planilha e abre o WhatsApp ----------
-  const rsvpDlg = document.getElementById("confirmar");
-  const form = document.getElementById("rsvp-form");
-  const done = document.getElementById("rsvp-done");
-  const erro = document.getElementById("rsvp-error");
-
-  document.getElementById("lnk-rsvp").addEventListener("click", e => {
-    if (typeof rsvpDlg.showModal !== "function") return;
-    e.preventDefault();
-    rsvpDlg.showModal();
-  });
-  document.getElementById("rsvp-close").addEventListener("click", () => rsvpDlg.close());
-  rsvpDlg.addEventListener("click", e => { if (e.target === rsvpDlg) rsvpDlg.close(); });
-  form.nome.addEventListener("input", () => { erro.textContent = ""; });
-
-  form.addEventListener("submit", e => {
-    e.preventDefault();
-    const d = Object.fromEntries(new FormData(form));
-    d.nome = d.nome.trim();
-    if (d.nome.length < 2) {
-      erro.textContent = "Escreva seu nome para confirmar.";
-      form.nome.focus();
+  // contagem regressiva
+  const alvo = new Date(CONFIG.inicio).getTime(), fim = new Date(CONFIG.fim).getTime();
+  const pad = n => String(n).padStart(2, "0");
+  function tick() {
+    const agora = Date.now(), ms = alvo - agora;
+    if (ms <= 0) {
+      $("countdown").textContent = agora < fim ? "É hoje!" : "Obrigada por celebrar comigo!";
       return;
     }
-    erro.textContent = "";
+    const s = Math.floor(ms / 1000);
+    $("c-d").textContent = Math.floor(s / 86400);
+    $("c-h").textContent = pad(Math.floor(s % 86400 / 3600));
+    $("c-m").textContent = pad(Math.floor(s % 3600 / 60));
+    $("c-s").textContent = pad(s % 60);
+    setTimeout(tick, 1000 - agora % 1000);
+  }
+  tick();
 
-    // envio que não depende da página continuar aberta (o WhatsApp abre logo em seguida)
+  // local
+  const [rua, cidade] = CONFIG.endereco.split(/, (?=Itapecerica)/);
+  $("address").innerHTML = `${rua.replace(", 17 – Embu Mirim", ",<br>17&nbsp;–&nbsp;Embu&nbsp;Mirim")}<br>${cidade}`;
+  if ($("map")) $("map").src = `https://www.google.com/maps?q=${destino}&output=embed`;
+  $("nav-maps2").href = MAPS_URL;
+  $("nav-waze2").href = WAZE_URL;
+
+  // agenda: um botão só. iPhone/iPad/Mac abrem o arquivo .ics (o próprio sistema oferece "Adicionar ao Calendário");
+  // Android e o resto abrem o Google Agenda, que é a agenda padrão desses aparelhos.
+  const utc = iso => new Date(iso).toISOString().replace(/[-:]/g, "").replace(/\.\d{3}/, "");
+  const GOOGLE_AGENDA = "https://calendar.google.com/calendar/render?action=TEMPLATE" +
+    `&text=${encodeURIComponent("15 anos da Ana")}&dates=${utc(CONFIG.inicio)}/${utc(CONFIG.fim)}` +
+    `&location=${destino}&details=${encodeURIComponent("Dress code: Social Fino (evitar rosa e prata).")}`;
+  const agenda = $("btn-agenda");
+  if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+    agenda.href = "ana-15-anos.ics";
+    agenda.removeAttribute("target");
+  } else {
+    agenda.href = GOOGLE_AGENDA;
+  }
+
+  // telas: cada parte abre sozinha, na ordem da história (local → dress code → confirmar)
+  const pages = [...document.querySelectorAll(".page")];
+  function route() {
+    const id = location.hash.slice(1);
+    pages.forEach(p => {
+      const on = p.id === id;
+      if (on === p.hidden) { p.hidden = !on; if (on) { p.scrollTop = 0; p.querySelector("h2").focus?.({ preventScroll: true }); } }
+    });
+  }
+  pages.forEach(p => p.querySelector("h2").setAttribute("tabindex", "-1"));
+  addEventListener("hashchange", route);
+  addEventListener("popstate", route);
+  // cada tela entra no histórico: o "voltar" do celular volta uma tela; "Voltar ao convite" volta direto ao início
+  document.querySelectorAll('.actions a, .next').forEach(a => a.addEventListener("click", e => {
+    e.preventDefault();
+    history.pushState({ d: (history.state?.d || 0) + 1 }, "", a.getAttribute("href"));
+    route();
+  }));
+  document.querySelectorAll("[data-back]").forEach(b => b.addEventListener("click", () => {
+    const d = history.state?.d || 0;
+    if (d > 0) history.go(-d);
+    else { history.replaceState(null, "", location.pathname + location.search); route(); }
+  }));
+  route();
+
+  // confirmação pelo WhatsApp
+  let qtd = 1;
+  const showQtd = () => $("f-qtd").textContent = qtd + (qtd === 1 ? " pessoa" : " pessoas");
+  $("f-menos").addEventListener("click", () => { qtd = Math.max(1, qtd - 1); showQtd(); });
+  $("f-mais").addEventListener("click", () => { qtd = Math.min(10, qtd + 1); showQtd(); });
+  const form = $("rsvp");
+  $("f-nome").addEventListener("input", () => { $("f-err").textContent = ""; });
+  form.addEventListener("submit", e => {
+    e.preventDefault();
+    const nome = $("f-nome").value.trim();
+    if (nome.length < 2) { $("f-err").textContent = "Escreva seu nome para confirmar."; $("f-nome").focus(); return; }
+    $("f-err").textContent = "";
+    const d = { nome, pessoas: String(qtd), telefone: $("f-tel").value.trim(), site: $("f-site").value };
+
+    // grava na planilha sem depender da página continuar aberta (o WhatsApp abre logo em seguida)
     if (CONFIG.planilhaUrl) {
       const corpo = new Blob([JSON.stringify(d)], { type: "text/plain" });
-      if (!(navigator.sendBeacon && navigator.sendBeacon(CONFIG.planilhaUrl, corpo))) {
-        fetch(CONFIG.planilhaUrl, { method: "POST", body: corpo, mode: "no-cors", keepalive: true }).catch(() => {});
-      }
+      try {
+        if (!(navigator.sendBeacon && navigator.sendBeacon(CONFIG.planilhaUrl, corpo))) {
+          fetch(CONFIG.planilhaUrl, { method: "POST", body: corpo, mode: "no-cors", keepalive: true }).catch(() => {});
+        }
+      } catch (err) { /* sem rede para a planilha: segue pelo WhatsApp */ }
     }
 
-    const pessoas = Number(d.pessoas);
-    const texto = `Olá! Aqui é ${d.nome}. Confirmo presença no aniversário de 15 anos da Ana em 12/12` +
-      (pessoas > 1 ? `, seremos ${pessoas} pessoas.` : ".");
+    const texto = `Olá! Aqui é ${nome}. Confirmo presença no aniversário de 15 anos da Ana em 12/12` +
+      (qtd > 1 ? `, seremos ${qtd} pessoas.` : ".");
     const waUrl = `https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(texto)}`;
-
-    document.getElementById("rsvp-thanks").textContent =
-      `Obrigado, ${d.nome.split(" ")[0]}! Agora é só enviar a mensagem no WhatsApp para concluir.`;
-    document.getElementById("rsvp-wa").href = waUrl;
+    $("f-thanks").textContent = `Obrigada, ${nome.split(" ")[0]}! Agora é só enviar a mensagem no WhatsApp para concluir.`;
+    $("f-wa").href = waUrl;
     form.hidden = true;
-    done.hidden = false;
-    if (!window.open(waUrl, "_blank")) location.href = waUrl;
+    $("f-done").hidden = false;
+    try { window.open(waUrl, "_blank", "noopener"); } catch (err) { /* o botão acima continua funcionando */ }
   });
 </script>
 </body>
