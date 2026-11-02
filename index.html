@@ -138,6 +138,24 @@
     background: var(--rose); color: #fff; text-decoration: none; font-weight: 700; font-size: 1.15rem;
   }
   .nav-btn + .nav-btn { background: var(--rose-deep); }
+  .rsvp { text-align: left; margin-top: 1.2rem; }
+  .rsvp label { display: block; margin: 0 0 1rem; font-size: 1.05rem; font-weight: 700; color: var(--ink); }
+  .rsvp input, .rsvp select {
+    display: block; width: 100%; margin-top: .35rem; padding: .8rem .9rem;
+    border: 1.5px solid #E9B3C0; border-radius: 12px; background: #fff;
+    font: 600 1.1rem/1.2 "Cormorant Garamond", Georgia, serif; color: var(--ink);
+  }
+  .rsvp select {
+    -webkit-appearance: none; appearance: none; padding-right: 2.6rem;
+    background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%23B9475F' stroke-width='1.8'/%3E%3C/svg%3E") no-repeat right 1rem center / .8rem;
+  }
+  .rsvp input:focus, .rsvp select:focus { outline: none; border-color: var(--rose-deep); box-shadow: 0 0 0 3px rgba(185,71,95,.15); }
+  .rsvp .opt { font-weight: 500; color: var(--rose-deep); }
+  .rsvp .hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+  .rsvp-error { min-height: 1.2em; margin: -.3rem 0 .6rem; color: #A3263F; font-size: 1rem; }
+  .rsvp .nav-btn { width: 100%; border: 0; cursor: pointer; font-family: inherit; }
+  .rsvp-privacy { margin: .2rem 0 0; font-size: .95rem; text-align: center; color: var(--rose-deep); }
+  .rsvp-done p { margin: 1rem 0 1.2rem; font-size: 1.2rem; line-height: 1.45; }
   .sheet-close { margin-top: .2rem; padding: .8rem 1.5rem; border: 0; background: none; font: inherit; color: var(--rose-deep); cursor: pointer; }
 
   @media (prefers-reduced-motion: reduce) {
@@ -258,7 +276,7 @@
         </a>
       </li>
       <li>
-        <a id="lnk-rsvp" target="_blank" rel="noopener">
+        <a id="lnk-rsvp" href="#confirmar" aria-haspopup="dialog">
           <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="8" r="3.5"/><path d="M3.5 19.5c.8-3.4 3.4-5.5 6.5-5.5 1.3 0 2.5.3 3.5 1"/><path d="m14.5 18 2.2 2.2 4.3-4.7"/></svg></span>
           Confirmar presença
         </a>
@@ -303,12 +321,39 @@
   <button class="sheet-close" type="button" id="sheet-close">Fechar</button>
 </dialog>
 
+<dialog class="sheet" id="confirmar" aria-labelledby="rsvp-title">
+  <h3 id="rsvp-title" tabindex="-1" autofocus style="outline:none">Confirmar presença</h3>
+  <form id="rsvp-form" class="rsvp" novalidate>
+    <label>Seu nome
+      <input name="nome" id="rsvp-nome" autocomplete="name" required maxlength="80" placeholder="Nome e sobrenome">
+    </label>
+    <label>Quantas pessoas, contando você
+      <select name="pessoas">
+        <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option>
+      </select>
+    </label>
+    <label>Telefone <span class="opt">(opcional)</span>
+      <input name="telefone" type="tel" inputmode="tel" autocomplete="tel" maxlength="20" placeholder="(11) 90000-0000">
+    </label>
+    <input name="site" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+    <p class="rsvp-error" id="rsvp-error" role="alert"></p>
+    <button class="nav-btn" type="submit">Confirmar e abrir o WhatsApp</button>
+    <p class="rsvp-privacy">Seus dados servem só para a lista de convidados da Ana.</p>
+  </form>
+  <div class="rsvp-done" id="rsvp-done" hidden>
+    <p id="rsvp-thanks"></p>
+    <a class="nav-btn" id="rsvp-wa" target="_blank" rel="noopener">Abrir o WhatsApp de novo</a>
+  </div>
+  <button class="sheet-close" type="button" id="rsvp-close">Fechar</button>
+</dialog>
+
 <script>
   // ==== CONFIGURE AQUI ====
   const CONFIG = {
     // WhatsApp: 55 + DDD + número, só dígitos (ex.: 5511987654321)
     whatsapp: "5511971689015",
-    mensagem: "Olá! Confirmo minha presença no aniversário da Ana em 12/12.",
+    // App da Web do Google Apps Script que grava na planilha de confirmações (vazio = só WhatsApp)
+    planilhaUrl: "https://script.google.com/macros/s/AKfycbzG5gIWNU5z3W3-C7-mkOJnDUUzEJjlyuyAZyhZtTbo9Q-bgIztwYAbONAI8tJxfeZc2Q/exec",
     endereco: "R. José Angelo Rodrigues, 17 – Embu Mirim, Itapecerica da Serra – SP, 06854-127",
     // ID do local no Google (mantém o pino exato no Maps)
     googlePlaceId: "ChIJ3aEFx9msz5QRvFUQXyI5sgU"
@@ -350,17 +395,52 @@
   sheet.addEventListener("click", e => { if (e.target === sheet) sheet.close(); }); // toque fora fecha
   sheet.querySelectorAll(".nav-btn").forEach(a => a.addEventListener("click", () => setTimeout(() => sheet.close(), 300)));
 
-  const rsvp = document.getElementById("lnk-rsvp");
-  if (/^55\d{10,11}$/.test(CONFIG.whatsapp)) {
-    rsvp.href = `https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(CONFIG.mensagem)}`;
-  } else {
-    rsvp.href = "#";
-    rsvp.removeAttribute("target");
-    rsvp.addEventListener("click", e => {
-      e.preventDefault();
-      document.getElementById("note").textContent = "Confirmação indisponível: número do WhatsApp não configurado.";
-    });
-  }
+  // ---------- Confirmação: grava na planilha e abre o WhatsApp ----------
+  const rsvpDlg = document.getElementById("confirmar");
+  const form = document.getElementById("rsvp-form");
+  const done = document.getElementById("rsvp-done");
+  const erro = document.getElementById("rsvp-error");
+
+  document.getElementById("lnk-rsvp").addEventListener("click", e => {
+    if (typeof rsvpDlg.showModal !== "function") return;
+    e.preventDefault();
+    rsvpDlg.showModal();
+  });
+  document.getElementById("rsvp-close").addEventListener("click", () => rsvpDlg.close());
+  rsvpDlg.addEventListener("click", e => { if (e.target === rsvpDlg) rsvpDlg.close(); });
+  form.nome.addEventListener("input", () => { erro.textContent = ""; });
+
+  form.addEventListener("submit", e => {
+    e.preventDefault();
+    const d = Object.fromEntries(new FormData(form));
+    d.nome = d.nome.trim();
+    if (d.nome.length < 2) {
+      erro.textContent = "Escreva seu nome para confirmar.";
+      form.nome.focus();
+      return;
+    }
+    erro.textContent = "";
+
+    // envio que não depende da página continuar aberta (o WhatsApp abre logo em seguida)
+    if (CONFIG.planilhaUrl) {
+      const corpo = new Blob([JSON.stringify(d)], { type: "text/plain" });
+      if (!(navigator.sendBeacon && navigator.sendBeacon(CONFIG.planilhaUrl, corpo))) {
+        fetch(CONFIG.planilhaUrl, { method: "POST", body: corpo, mode: "no-cors", keepalive: true }).catch(() => {});
+      }
+    }
+
+    const pessoas = Number(d.pessoas);
+    const texto = `Olá! Aqui é ${d.nome}. Confirmo presença no aniversário de 15 anos da Ana em 12/12` +
+      (pessoas > 1 ? `, seremos ${pessoas} pessoas.` : ".");
+    const waUrl = `https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(texto)}`;
+
+    document.getElementById("rsvp-thanks").textContent =
+      `Obrigado, ${d.nome.split(" ")[0]}! Agora é só enviar a mensagem no WhatsApp para concluir.`;
+    document.getElementById("rsvp-wa").href = waUrl;
+    form.hidden = true;
+    done.hidden = false;
+    if (!window.open(waUrl, "_blank")) location.href = waUrl;
+  });
 </script>
 </body>
 </html>
